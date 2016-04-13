@@ -4,7 +4,6 @@ using System.Collections;
 public class CharacterMovement : MonoBehaviour {
 
 	CharacterController controller;
-	public Camera camera;
 	Vector3 targetScale;
 	// Use this for initialization
 	void Start () {
@@ -14,9 +13,6 @@ public class CharacterMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!camera.enabled) {
-			return;
-		}
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
 
