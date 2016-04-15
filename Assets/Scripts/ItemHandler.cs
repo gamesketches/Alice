@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ItemHandler : MonoBehaviour {
 
@@ -16,12 +17,23 @@ public class ItemHandler : MonoBehaviour {
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 	
 		if(Physics.Raycast(PsychicRay, out hit, rayLength)){
+			if(hit.collider.gameObject.layer == 8) {
+				gameObject.GetComponentInChildren<Image>().color = Color.blue;
+			}
+			else {
+				gameObject.GetComponentInChildren<Image>().color = Color.white;
+			}
 			if(hit.collider.gameObject.tag == "Cookie" && 
 				Input.GetKeyDown(KeyCode.Space)) {
 				targetScale = new Vector3(2f, 2f, 2f);
 				Destroy(hit.collider.gameObject);
 			}
-			if(hit.collider.gameObject.tag == "CoinSlot" &&
+			else if(hit.collider.gameObject.tag == "Milk" &&
+				Input.GetKeyDown(KeyCode.Space)) {
+				targetScale = new Vector3(0.5f, 0.5f, 0.5f);
+				Destroy(hit.collider.gameObject);
+			}
+			else if(hit.collider.gameObject.tag == "CoinSlot" &&
 				Input.GetKeyDown(KeyCode.Space)) {
 				hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
 			}
