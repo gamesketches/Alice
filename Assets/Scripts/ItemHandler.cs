@@ -13,7 +13,7 @@ public class ItemHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		RaycastHit hit;
-		Ray PsychicRay = new Ray(transform.position, transform.forward);
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 	
 		if(Physics.Raycast(PsychicRay, out hit, rayLength)){
 			if(hit.collider.gameObject.tag == "Cookie" && 
@@ -21,12 +21,16 @@ public class ItemHandler : MonoBehaviour {
 				targetScale = new Vector3(2f, 2f, 2f);
 				Destroy(hit.collider.gameObject);
 			}
+			if(hit.collider.gameObject.tag == "CoinSlot" &&
+				Input.GetKeyDown(KeyCode.Space)) {
+				hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
+			}
 		}
 		if(gameObject.transform.localScale != targetScale) {
 			StartCoroutine(ScaleThatPokemon());
 		}
 
-		Debug.DrawRay(transform.position, transform.forward * rayLength);
+		Debug.DrawRay(PsychicRay.origin, PsychicRay.direction * rayLength);
 	}	/*else if(Input.GetKeyDown(KeyCode.Q)) {
 		targetScale = new Vector3(0.5f, 0.5f, 0.5f);
 	}*/
