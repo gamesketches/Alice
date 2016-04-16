@@ -6,9 +6,11 @@ public class ItemHandler : MonoBehaviour {
 
 	public float rayLength;
 	Vector3 targetScale;
+	GameObject heldItem;
 	// Use this for initialization
 	void Start () {
 		targetScale = gameObject.transform.localScale;
+		heldItem = null;
 	}
 	
 	// Update is called once per frame
@@ -20,8 +22,13 @@ public class ItemHandler : MonoBehaviour {
 			if(hit.collider.gameObject.layer == 8) {
 				gameObject.GetComponentInChildren<Image>().color = Color.blue;
 			}
-			else {
-				gameObject.GetComponentInChildren<Image>().color = Color.white;
+			if(hit.collider.gameObject.layer == 9 && 
+				hit.collider.gameObject != heldItem) {
+				gameObject.GetComponentInChildren<Image>().color = Color.blue;
+				if(Input.GetKeyDown(KeyCode.Space)){
+					hit.collider.gameObject.transform.parent = gameObject.transform;
+					heldItem = hit.collider.gameObject;
+				}
 			}
 			if(hit.collider.gameObject.tag == "Cookie" && 
 				Input.GetKeyDown(KeyCode.Space)) {
@@ -35,8 +42,14 @@ public class ItemHandler : MonoBehaviour {
 			}
 			else if(hit.collider.gameObject.tag == "CoinSlot" &&
 				Input.GetKeyDown(KeyCode.Space)) {
-				hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
+				if(heldItem.tag == "Coin") {
+					hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
+					Destroy(heldItem);
+				}
 			}
+		}
+		else {
+			gameObject.GetComponentInChildren<Image>().color = Color.white;
 		}
 		if(gameObject.transform.localScale != targetScale) {
 			StartCoroutine(ScaleThatPokemon());
