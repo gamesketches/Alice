@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour {
 		}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
 

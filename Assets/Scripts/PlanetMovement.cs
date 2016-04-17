@@ -3,26 +3,22 @@ using System.Collections;
 
 public class PlanetMovement : MonoBehaviour {
 
-	CharacterController controller;
-	public GameObject sphere;
+	public FauxGravityAttractor attractor;
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
-		controller = GetComponent<CharacterController>();
 		rb = GetComponent<Rigidbody>();
+		rb.constraints = RigidbodyConstraints.FreezeRotation;
+		rb.useGravity = false;
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
-		Vector3 targetVector = sphere.transform.position - gameObject.transform.position;
-		transform.up = targetVector;
-		Debug.Log(targetVector);
-		targetVector *= 0.1f;
-		controller.Move(transform.forward * vert * Time.deltaTime * 10.0f);
-		transform.Rotate(0f, hori * 2f, 0f);
-		rb.AddForce(1 * targetVector.normalized / targetVector.sqrMagnitude);
 
+		rb.MovePosition(rb.position + transform.TransformDirection(new Vector3(hori, 0, vert).normalized * 10.0f * Time.deltaTime));
+
+		attractor.Attract(transform);
 	}
 }
