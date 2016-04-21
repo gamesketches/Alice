@@ -31,6 +31,7 @@ public class CatStomachLining : MonoBehaviour {
 			if(frameCount == frames.Length){
 				frameCount = 0;
 			}
+			Debug.Log(frames[frameCount]);
 			timer = delay;
 		}
 	}
