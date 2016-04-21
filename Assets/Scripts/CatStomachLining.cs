@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class CatStomachLining : MonoBehaviour {
 
 	Texture2D[] frames;
 	public int delay;
+	public float timeToReset;
 	private int timer;
 	private int frameCount = 0;
 	private List<Renderer> renderers;
@@ -17,6 +19,7 @@ public class CatStomachLining : MonoBehaviour {
 		}
 		frames = Resources.LoadAll<Texture2D>("Textures");
 		timer = delay;
+		Invoke("ResetGame", timeToReset);
 	}
 	
 	// Update is called once per frame
@@ -31,8 +34,11 @@ public class CatStomachLining : MonoBehaviour {
 			if(frameCount == frames.Length){
 				frameCount = 0;
 			}
-			Debug.Log(frames[frameCount]);
 			timer = delay;
 		}
+	}
+
+	void ResetGame() {
+		SceneManager.LoadScene(0);
 	}
 }
