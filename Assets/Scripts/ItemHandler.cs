@@ -40,13 +40,14 @@ public class ItemHandler : MonoBehaviour {
 				targetScale = new Vector3(0.5f, 0.5f, 0.5f);
 				Destroy(hit.collider.gameObject);
 			}
-			else if(hit.collider.gameObject.tag == "CoinSlot" &&
+			// Leaving this code in in case we decide we want more actions
+		/*	else if(hit.collider.gameObject.tag == "CoinSlot" &&
 				Input.GetKeyDown(KeyCode.Space)) {
 				if(heldItem.tag == "Coin") {
 					hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
 					Destroy(heldItem);
 				}
-			}
+			}*/
 		}
 		else {
 			gameObject.GetComponentInChildren<Image>().color = Color.white;
