@@ -12,7 +12,16 @@ public class LockScript : MonoBehaviour {
 	void OnTriggerEnter (Collider other) {
 		if(other.gameObject.transform.FindChild("KeyObject") != null) {
 			Destroy(other.gameObject.transform.FindChild("KeyObject").gameObject);
+			Debug.Log("KeyObject being found");
 			Destroy(gameObject);
+		}
+		else if(other.gameObject.tag == "Key") {
+			Destroy(other.gameObject.transform.FindChild("KeyObject").gameObject);
+			Debug.Log("went in through tag");
+			Destroy(gameObject);
+		}
+		else {
+			Debug.Log("wtf");
 		}
 	}
 }

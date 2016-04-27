@@ -34,11 +34,13 @@ public class ItemHandler : MonoBehaviour {
 				Input.GetKeyDown(KeyCode.Space)) {
 				targetScale = new Vector3(2f, 2f, 2f);
 				Destroy(hit.collider.gameObject);
+				Debug.Log("cookie");
 			}
 			else if(hit.collider.gameObject.tag == "Milk" &&
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(0.5f, 0.5f, 0.5f);
+				targetScale = new Vector3(0.2f, 0.2f, 0.2f);
 				Destroy(hit.collider.gameObject);
+				Debug.Log("milk");
 			}
 			// Leaving this code in in case we decide we want more actions
 		/*	else if(hit.collider.gameObject.tag == "CoinSlot" &&
