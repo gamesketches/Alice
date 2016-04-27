@@ -26,7 +26,7 @@ public class ItemHandler : MonoBehaviour {
 				hit.collider.gameObject != heldItem) {
 				gameObject.GetComponentInChildren<Image>().color = Color.blue;
 				if(Input.GetKeyDown(KeyCode.Space)){
-					hit.collider.gameObject.transform.parent = gameObject.transform;
+					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
 				}
 			}
