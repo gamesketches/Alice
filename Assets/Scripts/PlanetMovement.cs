@@ -17,7 +17,7 @@ public class PlanetMovement : MonoBehaviour {
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
 
-		rb.MovePosition(rb.position + transform.TransformDirection(new Vector3(hori, 0, vert).normalized * 10.0f * Time.deltaTime));
+		rb.MovePosition(rb.position + Camera.main.transform.TransformDirection(new Vector3(hori, 0, vert).normalized * 10.0f * Time.deltaTime));
 
 		attractor.Attract(transform);
 	}

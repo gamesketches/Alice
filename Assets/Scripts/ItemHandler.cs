@@ -32,7 +32,7 @@ public class ItemHandler : MonoBehaviour {
 			}
 			if(hit.collider.gameObject.tag == "Cookie" && 
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(2f, 2f, 2f);
+				targetScale = new Vector3(4f, 4f, 4f);
 				Destroy(hit.collider.gameObject);
 				Debug.Log("cookie");
 			}
