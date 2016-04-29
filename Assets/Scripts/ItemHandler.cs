@@ -29,6 +29,7 @@ public class ItemHandler : MonoBehaviour {
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
+					heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
 					heldItem.layer = 10;
 				}
 			}
