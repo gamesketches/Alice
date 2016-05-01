@@ -5,11 +5,15 @@ using UnityEngine.UI;
 public class ItemHandler : MonoBehaviour {
 
 	public float rayLength;
+	public float smallSize = 0.2f;
+	public float mediumSize = 1f;
+	public float largeSize = 4f;
 	Vector3 targetScale;
 	GameObject heldItem;
 	// Use this for initialization
 	void Start () {
 		targetScale = gameObject.transform.localScale;
+		mediumSize = targetScale.x;
 		heldItem = null;
 	}
 	
@@ -35,13 +39,13 @@ public class ItemHandler : MonoBehaviour {
 			}
 			if(hit.collider.gameObject.tag == "Cookie" && 
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(4f, 4f, 4f);
+				targetScale = new Vector3(largeSize, largeSize, largeSize);
 				Destroy(hit.collider.gameObject);
 				Debug.Log("cookie");
 			}
 			else if(hit.collider.gameObject.tag == "Milk" &&
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(0.2f, 0.2f, 0.2f);
+				targetScale = new Vector3(smallSize, smallSize, smallSize);
 				Destroy(hit.collider.gameObject);
 				Debug.Log("milk");
 			}
