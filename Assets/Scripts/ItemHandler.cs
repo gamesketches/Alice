@@ -53,6 +53,11 @@ public class ItemHandler : MonoBehaviour {
 					Destroy(heldItem);
 				}
 			}
+			else if(hit.collider.gameObject.name == "PiggyBank") {
+				if(Input.GetKeyDown(KeyCode.Space)){
+					StartCoroutine(hit.collider.gameObject.GetComponent<PiggyBankScript>().Fall());
+				}
+			}
 		}
 		else {
 			gameObject.GetComponentInChildren<Image>().color = Color.white;
