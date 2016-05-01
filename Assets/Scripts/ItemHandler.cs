@@ -8,6 +8,8 @@ public class ItemHandler : MonoBehaviour {
 	public float smallSize = 0.2f;
 	public float mediumSize = 1f;
 	public float largeSize = 4f;
+	private Color defaultReticleColor = Color.white;
+	private Color highlightColor = Color.blue;
 	Vector3 targetScale;
 	GameObject heldItem;
 	// Use this for initialization
@@ -15,6 +17,8 @@ public class ItemHandler : MonoBehaviour {
 		targetScale = gameObject.transform.localScale;
 		mediumSize = targetScale.x;
 		heldItem = null;
+		defaultReticleColor.a = 0.3f;
+		highlightColor.a = 0.3f;
 	}
 	
 	// Update is called once per frame
@@ -24,12 +28,12 @@ public class ItemHandler : MonoBehaviour {
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
-				gameObject.GetComponentInChildren<Image>().color = Color.blue;
+				gameObject.GetComponentInChildren<Image>().color = highlightColor;
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
 
-				gameObject.GetComponentInChildren<Image>().color = Color.blue;
+				gameObject.GetComponentInChildren<Image>().color = highlightColor;
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
@@ -64,7 +68,7 @@ public class ItemHandler : MonoBehaviour {
 			}
 		}
 		else {
-			gameObject.GetComponentInChildren<Image>().color = Color.white;
+			gameObject.GetComponentInChildren<Image>().color = defaultReticleColor;
 		}
 		if(gameObject.transform.localScale != targetScale) {
 			StartCoroutine(ScaleThatPokemon());
