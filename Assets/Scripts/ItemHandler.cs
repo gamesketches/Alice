@@ -17,37 +17,42 @@ public class ItemHandler : MonoBehaviour {
 	void Update () {
 		RaycastHit hit;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-	
-		if(Physics.Raycast(PsychicRay, out hit, rayLength)){
+		int layerMask = CreateLayerMask();
+		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
 				gameObject.GetComponentInChildren<Image>().color = Color.blue;
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
+
 				gameObject.GetComponentInChildren<Image>().color = Color.blue;
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
+					heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
+					heldItem.layer = 10;
 				}
 			}
 			if(hit.collider.gameObject.tag == "Cookie" && 
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(2f, 2f, 2f);
+				targetScale = new Vector3(4f, 4f, 4f);
 				Destroy(hit.collider.gameObject);
+				Debug.Log("cookie");
 			}
 			else if(hit.collider.gameObject.tag == "Milk" &&
 				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(0.5f, 0.5f, 0.5f);
+				targetScale = new Vector3(0.2f, 0.2f, 0.2f);
 				Destroy(hit.collider.gameObject);
+				Debug.Log("milk");
 			}
 			// Leaving this code in in case we decide we want more actions
-		/*	else if(hit.collider.gameObject.tag == "CoinSlot" &&
+			else if(hit.collider.gameObject.tag == "CoinSlot" &&
 				Input.GetKeyDown(KeyCode.Space)) {
 				if(heldItem.tag == "Coin") {
 					hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
 					Destroy(heldItem);
 				}
-			}*/
+			}
 		}
 		else {
 			gameObject.GetComponentInChildren<Image>().color = Color.white;
@@ -69,5 +74,11 @@ public class ItemHandler : MonoBehaviour {
 			t += 3f * Time.deltaTime;
 			yield return null;
 		}
+	}
+
+	int CreateLayerMask() {
+		int layerMask1 = 1 << 8;
+		int layerMask2 = 1 << 9;
+		return layerMask1 | layerMask2;
 	}
 }

@@ -15,8 +15,8 @@ public class CoinSlotBehavior : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		CreateObject();
-		Destroy(other.gameObject);
+		//CreateObject();
+		//Destroy(other.gameObject);
 	}
 
 	public void CreateObject() {
