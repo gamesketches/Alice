@@ -16,6 +16,10 @@ public class PlanetMovement : MonoBehaviour {
 	void FixedUpdate () {
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
+		if(transform.localScale.x > 10f) {
+			rb.useGravity = true;
+			return;
+		}
 
 		rb.MovePosition(rb.position + Camera.main.transform.TransformDirection(new Vector3(hori, 0, vert).normalized * 8.0f * Time.deltaTime));
 
