@@ -61,6 +61,12 @@ public class ItemHandler : MonoBehaviour {
 					Destroy(heldItem);
 				}
 			}
+			else if(hit.collider.gameObject.tag == "Drawer" && 
+				Input.GetKeyDown(KeyCode.Space)) {
+				if(heldItem.tag == "BobbyPin") {
+					StartCoroutine(hit.collider.gameObject.GetComponent<DrawerScript>().openDrawer());
+				}
+			}
 			else if(hit.collider.gameObject.name == "PiggyBank") {
 				if(Input.GetKeyDown(KeyCode.Space)){
 					StartCoroutine(hit.collider.gameObject.GetComponent<PiggyBankScript>().Fall());
