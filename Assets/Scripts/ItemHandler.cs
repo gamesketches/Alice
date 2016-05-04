@@ -50,7 +50,7 @@ public class ItemHandler : MonoBehaviour {
 					heldItem.layer = 10;
 				}
 			}
-			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag)){
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetKeyDown(KeyCode.Space)){
 				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
 				itemFunction(hit.collider.gameObject);
 			}
@@ -77,7 +77,13 @@ public class ItemHandler : MonoBehaviour {
 
 	void HandleCookie(GameObject cookie) {
 		targetScale = new Vector3(largeSize, largeSize, largeSize);
-		Destroy(cookie);
+		cookie.transform.parent = Camera.main.transform;
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		cookie.transform.position = PsychicRay.GetPoint(rayLength / 3);
+		cookie.layer = 10;
+		cookie.transform.Rotate(new Vector3(0f, 0f, 90f));
+		StartCoroutine(cookie.gameObject.GetComponent<CookieEatingAnimation>().CookieAnimation());
+		//Destroy(cookie);
 		Debug.Log("cookie");
 	}
 
