@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class ItemHandler : MonoBehaviour {
@@ -10,6 +11,8 @@ public class ItemHandler : MonoBehaviour {
 	public float largeSize = 4f;
 	private Color defaultReticleColor = Color.white;
 	private Color highlightColor = Color.blue;
+	private delegate void HandleItem();
+	Dictionary<string, HandleItem> itemHandlers;
 	Vector3 targetScale;
 	GameObject heldItem;
 	// Use this for initialization
