@@ -28,6 +28,7 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("CoinSlot", HandleCoinSlot);
 		itemHandlers.Add("Drawer", HandleDrawer);
 		itemHandlers.Add("PiggyBank", HandlePiggyBank);
+		itemHandlers.Add("CatBowl", HandleCatBowl);
 	}
 	
 	// Update is called once per frame
@@ -111,6 +112,14 @@ public class ItemHandler : MonoBehaviour {
 
 	void HandlePiggyBank(GameObject piggyBank) {
 		StartCoroutine(piggyBank.GetComponent<PiggyBankScript>().Fall());
+	}
+
+	void HandleCatBowl(GameObject catbowl) {
+		if(heldItem.tag == "Fish Food") {
+			heldItem.transform.position = catbowl.transform.position;
+			heldItem.transform.parent = catbowl.transform;
+			heldItem = null;
+		}
 	}
 
 	int CreateLayerMask() {
