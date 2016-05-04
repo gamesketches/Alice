@@ -11,7 +11,6 @@ public class CookieEatingAnimation : MonoBehaviour {
 	}
 
 	public IEnumerator CookieAnimation() {
-		Debug.Log(cookiePieces.Length);
 		for(int i = 0; i < cookiePieces.Length; i++) {
 			cookiePieces[i].enabled = false;
 			for(int k = 0; k < eatingSpeed; k++) {

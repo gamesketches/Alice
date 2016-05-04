@@ -83,13 +83,16 @@ public class ItemHandler : MonoBehaviour {
 		cookie.layer = 10;
 		cookie.transform.Rotate(new Vector3(0f, 0f, 90f));
 		StartCoroutine(cookie.gameObject.GetComponent<CookieEatingAnimation>().CookieAnimation());
-		//Destroy(cookie);
 		Debug.Log("cookie");
 	}
 
 	void HandleMilk(GameObject milk) {
 		targetScale = new Vector3(smallSize, smallSize, smallSize);
-		Destroy(milk);
+		milk.transform.parent = Camera.main.transform;
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
+		milk.layer = 10;
+		StartCoroutine(milk.gameObject.GetComponent<MilkDrinkingAnimation>().MilkAnimation());
 		Debug.Log("milk");
 	}
 
