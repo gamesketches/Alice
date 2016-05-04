@@ -50,8 +50,10 @@ public class ItemHandler : MonoBehaviour {
 					heldItem.layer = 10;
 				}
 			}
-			HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
-			itemFunction(hit.collider.gameObject);
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag)){
+				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
+				itemFunction(hit.collider.gameObject);
+			}
 		}
 		else {
 			gameObject.GetComponentInChildren<Image>().color = defaultReticleColor;
