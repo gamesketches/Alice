@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour {
 		float hori = Input.GetAxis("Horizontal");
 		float vert = Input.GetAxis("Vertical");
 
-		controller.Move(Camera.main.transform.forward * vert * Time.deltaTime * 10.0f);
+		controller.Move(Camera.main.transform.forward * vert * Time.deltaTime * 10.0f + Physics.gravity);
 		transform.Rotate(0f, hori * 2f, 0f);
 	}
 }
