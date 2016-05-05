@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class ItemHandler : MonoBehaviour {
@@ -10,6 +11,8 @@ public class ItemHandler : MonoBehaviour {
 	public float largeSize = 4f;
 	private Color defaultReticleColor = Color.white;
 	private Color highlightColor = Color.blue;
+	private delegate void HandleItem(GameObject item);
+	Dictionary<string, HandleItem> itemHandlers;
 	Vector3 targetScale;
 	GameObject heldItem;
 	// Use this for initialization
@@ -19,6 +22,13 @@ public class ItemHandler : MonoBehaviour {
 		heldItem = null;
 		defaultReticleColor.a = 0.3f;
 		highlightColor.a = 0.3f;
+		itemHandlers = new Dictionary<string, HandleItem>();
+		itemHandlers.Add("Cookie", HandleCookie);
+		itemHandlers.Add("Milk", HandleMilk);
+		itemHandlers.Add("CoinSlot", HandleCoinSlot);
+		itemHandlers.Add("Drawer", HandleDrawer);
+		itemHandlers.Add("PiggyBank", HandlePiggyBank);
+		itemHandlers.Add("CatBowl", HandleCatBowl);
 	}
 	
 	// Update is called once per frame
@@ -41,30 +51,9 @@ public class ItemHandler : MonoBehaviour {
 					heldItem.layer = 10;
 				}
 			}
-			if(hit.collider.gameObject.tag == "Cookie" && 
-				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(largeSize, largeSize, largeSize);
-				Destroy(hit.collider.gameObject);
-				Debug.Log("cookie");
-			}
-			else if(hit.collider.gameObject.tag == "Milk" &&
-				Input.GetKeyDown(KeyCode.Space)) {
-				targetScale = new Vector3(smallSize, smallSize, smallSize);
-				Destroy(hit.collider.gameObject);
-				Debug.Log("milk");
-			}
-			// Leaving this code in in case we decide we want more actions
-			else if(hit.collider.gameObject.tag == "CoinSlot" &&
-				Input.GetKeyDown(KeyCode.Space)) {
-				if(heldItem.tag == "Coin") {
-					hit.collider.gameObject.GetComponent<CoinSlotBehavior>().CreateObject();
-					Destroy(heldItem);
-				}
-			}
-			else if(hit.collider.gameObject.name == "PiggyBank") {
-				if(Input.GetKeyDown(KeyCode.Space)){
-					StartCoroutine(hit.collider.gameObject.GetComponent<PiggyBankScript>().Fall());
-				}
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetKeyDown(KeyCode.Space)){
+				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
+				itemFunction(hit.collider.gameObject);
 			}
 		}
 		else {
@@ -75,9 +64,7 @@ public class ItemHandler : MonoBehaviour {
 		}
 
 		Debug.DrawRay(PsychicRay.origin, PsychicRay.direction * rayLength);
-	}	/*else if(Input.GetKeyDown(KeyCode.Q)) {
-		targetScale = new Vector3(0.5f, 0.5f, 0.5f);
-	}*/
+	}
 
 	IEnumerator ScaleThatPokemon() {
 		float t = 0f;
@@ -86,6 +73,52 @@ public class ItemHandler : MonoBehaviour {
 			gameObject.transform.localScale = Vector3.Lerp(startingScale, targetScale, t);
 			t += 3f * Time.deltaTime;
 			yield return null;
+		}
+	}
+
+	void HandleCookie(GameObject cookie) {
+		targetScale = new Vector3(largeSize, largeSize, largeSize);
+		cookie.transform.parent = Camera.main.transform;
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		cookie.transform.position = PsychicRay.GetPoint(rayLength / 3);
+		cookie.layer = 10;
+		cookie.transform.Rotate(new Vector3(0f, 0f, 90f));
+		StartCoroutine(cookie.gameObject.GetComponent<CookieEatingAnimation>().CookieAnimation());
+		Debug.Log("cookie");
+	}
+
+	void HandleMilk(GameObject milk) {
+		targetScale = new Vector3(smallSize, smallSize, smallSize);
+		milk.transform.parent = Camera.main.transform;
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
+		milk.layer = 10;
+		StartCoroutine(milk.gameObject.GetComponent<MilkDrinkingAnimation>().MilkAnimation());
+		Debug.Log("milk");
+	}
+
+	void HandleCoinSlot(GameObject coinSlot) {
+		if(heldItem.tag == "Coin") {
+			coinSlot.GetComponent<CoinSlotBehavior>().CreateObject();
+			Destroy(heldItem);
+		}
+	}
+
+	void HandleDrawer(GameObject drawer) {
+		if(heldItem.tag == "BobbyPin") {
+			StartCoroutine(drawer.GetComponent<DrawerScript>().openDrawer());
+		}
+	}
+
+	void HandlePiggyBank(GameObject piggyBank) {
+		StartCoroutine(piggyBank.GetComponent<PiggyBankScript>().Fall());
+	}
+
+	void HandleCatBowl(GameObject catbowl) {
+		if(heldItem.tag == "Fish Food") {
+			heldItem.transform.position = catbowl.transform.position;
+			heldItem.transform.parent = catbowl.transform;
+			heldItem = null;
 		}
 	}
 

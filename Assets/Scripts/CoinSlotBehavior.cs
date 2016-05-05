@@ -21,6 +21,6 @@ public class CoinSlotBehavior : MonoBehaviour {
 
 	public void CreateObject() {
 		Vector3 temp = gameObject.transform.position;
-		Instantiate(myObject, new Vector3(temp.x, temp.y -0.2f, temp.z), Quaternion.identity);
+		Instantiate(myObject, new Vector3(temp.x, temp.y -0.5f, temp.z), Quaternion.identity);
 	}
 }
