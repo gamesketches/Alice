@@ -9,6 +9,7 @@ public class ItemHandler : MonoBehaviour {
 	public float smallSize = 0.05f;
 	public float mediumSize = 1f;
 	public float largeSize = 4f;
+	public Image reticle;
 	private Color defaultReticleColor = Color.white;
 	private Color highlightColor = Color.blue;
 	private delegate void HandleItem(GameObject item);
@@ -38,12 +39,12 @@ public class ItemHandler : MonoBehaviour {
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
-				gameObject.GetComponentInChildren<Image>().color = highlightColor;
+				reticle.color = highlightColor;
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
 
-				gameObject.GetComponentInChildren<Image>().color = highlightColor;
+				reticle.color = highlightColor;
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
@@ -57,7 +58,7 @@ public class ItemHandler : MonoBehaviour {
 			}
 		}
 		else {
-			gameObject.GetComponentInChildren<Image>().color = defaultReticleColor;
+			reticle.color = defaultReticleColor;
 		}
 		if(gameObject.transform.localScale != targetScale) {
 			StartCoroutine(ScaleThatPokemon());
@@ -73,7 +74,6 @@ public class ItemHandler : MonoBehaviour {
 			gameObject.transform.localScale = Vector3.Lerp(startingScale, targetScale, t);
 			t += 3f * Time.deltaTime;
 			yield return null;
-			Debug.Log(gameObject.transform.position);
 		}
 	}
 
