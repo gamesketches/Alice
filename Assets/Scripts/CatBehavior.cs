@@ -15,14 +15,14 @@ public class CatBehavior : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(other.gameObject.tag == "Player" && player.localScale.x < 1f) {
+		if(other.gameObject.tag == "Player" && player.localScale.y < 1f) {
 			SceneManager.LoadScene(1);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(player.localScale.x < 1f && foodBowl.parent.GetChild(0) != null) {
+		if(player.localScale.y < 1f && foodBowl.parent.GetChild(0) != null) {
 			agent.SetDestination(player.position);
 			agent.stoppingDistance = 0f;
 		}

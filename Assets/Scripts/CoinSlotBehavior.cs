@@ -6,7 +6,6 @@ public class CoinSlotBehavior : MonoBehaviour {
 	public GameObject myObject;
 	// Use this for initialization
 	void Start () {
-		CreateObject();
 	}
 	
 	// Update is called once per frame

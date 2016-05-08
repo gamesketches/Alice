@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ItemHandler : MonoBehaviour {
 
 	public float rayLength;
-	public float smallSize = 0.2f;
+	public float smallSize = 0.05f;
 	public float mediumSize = 1f;
 	public float largeSize = 4f;
 	private Color defaultReticleColor = Color.white;
@@ -77,7 +77,7 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleCookie(GameObject cookie) {
-		targetScale = new Vector3(largeSize, largeSize, largeSize);
+		targetScale = new Vector3(mediumSize, largeSize, mediumSize);
 		cookie.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		cookie.transform.position = PsychicRay.GetPoint(rayLength / 3);
@@ -88,7 +88,7 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleMilk(GameObject milk) {
-		targetScale = new Vector3(smallSize, smallSize, smallSize);
+		targetScale = new Vector3(mediumSize, smallSize, mediumSize);
 		milk.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
