@@ -8,7 +8,7 @@ public class DrawerScript : MonoBehaviour {
 	public IEnumerator openDrawer() {
 		Vector3 startPosition = gameObject.transform.position;
 		Vector3 targetPosition = startPosition;
-		targetPosition.x += moveDistance;
+		targetPosition.z += moveDistance;
 		float t = 0;
 		while(t <= 1f) {
 			gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, t);

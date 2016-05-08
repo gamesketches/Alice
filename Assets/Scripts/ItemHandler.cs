@@ -73,6 +73,7 @@ public class ItemHandler : MonoBehaviour {
 			gameObject.transform.localScale = Vector3.Lerp(startingScale, targetScale, t);
 			t += 3f * Time.deltaTime;
 			yield return null;
+			Debug.Log(gameObject.transform.position);
 		}
 	}
 
