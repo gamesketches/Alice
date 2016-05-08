@@ -6,10 +6,10 @@ public class PiggyBankScript : MonoBehaviour {
 	public GameObject Bulb;
 	public float fallSpeed = 1;
 	private bool falling = true;
-/*  Have this in for testing only
+//  Have this in for testing only
 	void Start() {
 		StartCoroutine(Fall());
-	}*/
+	}
 
 	public IEnumerator Fall() {
 		Destroy(Bulb);
