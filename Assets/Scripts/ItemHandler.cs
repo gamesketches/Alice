@@ -124,6 +124,7 @@ public class ItemHandler : MonoBehaviour {
 		if(heldItem.tag == "Fish Food") {
 			heldItem.transform.position = catbowl.transform.position;
 			heldItem.transform.parent = catbowl.transform;
+			Debug.Log(heldItem.transform.parent.GetChild(0));
 			heldItem = null;
 		}
 	}

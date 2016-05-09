@@ -26,7 +26,7 @@ public class CatBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(player.localScale.y < 1f && foodBowl.GetChild(0) == null) {
+		if(player.localScale.y < 1f && foodBowl.childCount == 0) {
 			checkAudioClip("catattack");
 			agent.SetDestination(player.position);
 			agent.stoppingDistance = 0f;
