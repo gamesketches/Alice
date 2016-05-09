@@ -11,7 +11,7 @@ public class StarEater : MonoBehaviour {
 	void Start () {
 		rewardSound = 0;
 		audio = GetComponent<AudioSource>();
-		rewardSounds = Resources.LoadAll<AudioClip>("Sounds/Reward Sounds");
+		rewardSounds = Resources.LoadAll<AudioClip>("Sounds/Reward Sound/");
 		audio.clip = rewardSounds[rewardSound];
 	}
 	
