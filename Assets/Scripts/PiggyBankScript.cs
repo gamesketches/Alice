@@ -10,7 +10,7 @@ public class PiggyBankScript : MonoBehaviour {
 //  Have this in for testing only
 	void Start() {
 		audio = GetComponent<AudioSource>();
-		StartCoroutine(Fall());
+		//StartCoroutine(Fall());
 	}
 
 	public IEnumerator Fall() {
@@ -19,7 +19,7 @@ public class PiggyBankScript : MonoBehaviour {
 		while(audio.isPlaying) {
 			yield return null;
 		}
-		audio.clip = Resources.Load<AudioClip>("Sounds/Piggybank shatter/piggybankshatter");
+		audio.clip = Resources.Load<AudioClip>("Sounds/Piggybank shatter/shakefall");
 		Debug.Log(audio.clip.name);
 		audio.Play();
 		while(falling){

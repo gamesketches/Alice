@@ -78,7 +78,11 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleCookie(GameObject cookie) {
-		targetScale = new Vector3(mediumSize, largeSize, mediumSize);
+		float newSize = gameObject.transform.localScale.y == mediumSize ? smallSize : mediumSize;
+		targetScale = new Vector3(mediumSize, newSize, mediumSize);
+		//Vector3 tempPos = Camera.main.transform.localPosition;
+		//tempPos.z -=
+		Camera.main.transform.localPosition = new Vector3(0f, 0f, 0f);
 		cookie.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		cookie.transform.position = PsychicRay.GetPoint(rayLength / 3);
@@ -89,7 +93,8 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleMilk(GameObject milk) {
-		targetScale = new Vector3(mediumSize, smallSize, mediumSize);
+		float newSize = gameObject.transform.localScale.y == mediumSize ? largeSize : mediumSize;
+		targetScale = new Vector3(mediumSize, newSize, mediumSize);
 		milk.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
