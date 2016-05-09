@@ -4,9 +4,15 @@ using System.Collections;
 public class StarEater : MonoBehaviour {
 
 	public float growBy = 1f;
+	AudioSource audio;
+	AudioClip[] rewardSounds;
+	int rewardSound;
 	// Use this for initialization
 	void Start () {
-	
+		rewardSound = 0;
+		audio = GetComponent<AudioSource>();
+		rewardSounds = Resources.LoadAll<AudioClip>("Sounds/Reward Sounds");
+		audio.clip = rewardSounds[rewardSound];
 	}
 	
 	// Update is called once per frame
@@ -19,6 +25,8 @@ public class StarEater : MonoBehaviour {
 				Vector3 scale = gameObject.transform.localScale;
 				scale += new Vector3(growBy, growBy, growBy);
 				gameObject.transform.localScale = scale;
+				rewardSound++;
+				audio.clip = rewardSounds[rewardSound];
 			}
 		}
 		Debug.DrawRay(PsychicRay.origin, PsychicRay.direction * 100f);
