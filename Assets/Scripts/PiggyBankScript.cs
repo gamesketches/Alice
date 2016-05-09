@@ -6,13 +6,22 @@ public class PiggyBankScript : MonoBehaviour {
 	public GameObject Bulb;
 	public float fallSpeed = 1;
 	private bool falling = true;
+	AudioSource audio;
 //  Have this in for testing only
 	void Start() {
+		audio = GetComponent<AudioSource>();
 		StartCoroutine(Fall());
 	}
 
 	public IEnumerator Fall() {
 		Destroy(Bulb);
+		audio.Play();
+		while(audio.isPlaying) {
+			yield return null;
+		}
+		audio.clip = Resources.Load<AudioClip>("Sounds/Piggybank shatter/piggybankshatter");
+		Debug.Log(audio.clip.name);
+		audio.Play();
 		while(falling){
 			Vector3 oldPos = gameObject.transform.position;
 			oldPos.y -= fallSpeed * Time.deltaTime;

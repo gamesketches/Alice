@@ -5,12 +5,14 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 
 	Transform milkTransform;
 	float travelDistance;
+	AudioSource audio;
 	// Use this for initialization
 	void Start () {
 		GameObject milkLiquid = gameObject.transform.GetChild(0).gameObject;
 		float travelDistance = milkLiquid.GetComponent<Renderer>().bounds.extents.y / 2;
 		Debug.Log(travelDistance);
 		milkTransform = milkLiquid.transform;
+		audio = GetComponent<AudioSource>();
 
 	}
 	
@@ -25,6 +27,7 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 		Renderer objectRenderer = milkTransform.gameObject.GetComponent<Renderer>();
 		float lastY = objectRenderer.bounds.extents.y;
 		float t = 0;
+		audio.Play();
 		while(t < 1) {
 			
 			milkTransform.localScale = Vector3.Lerp(startingScale, targetScale, t);
