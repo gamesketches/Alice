@@ -15,7 +15,7 @@ public class ItemHandler : MonoBehaviour {
 	private delegate void HandleItem(GameObject item);
 	Dictionary<string, HandleItem> itemHandlers;
 	Vector3 targetScale;
-	GameObject heldItem;
+	public GameObject heldItem;
 	// Use this for initialization
 	void Start () {
 		targetScale = gameObject.transform.localScale;

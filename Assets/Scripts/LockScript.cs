@@ -15,13 +15,13 @@ public class LockScript : MonoBehaviour {
 			Debug.Log("KeyObject being found");
 			Destroy(gameObject);
 		}
-		else if(other.gameObject.tag == "Key") {
-			Destroy(other.gameObject.transform.FindChild("KeyObject").gameObject);
+		else if(other.gameObject.GetComponent<ItemHandler>().heldItem.tag == "Key") {
+			Destroy(other.gameObject.GetComponent<ItemHandler>().heldItem);
 			Debug.Log("went in through tag");
 			Destroy(gameObject);
 		}
 		else {
-			Debug.Log("wtf");
+			Debug.Log(other.gameObject.GetComponent<ItemHandler>().heldItem.tag);
 		}
 	}
 }
