@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
@@ -16,5 +17,9 @@ public class CharacterMovement : MonoBehaviour {
 
 		controller.Move(Camera.main.transform.forward * vert * Time.deltaTime * 10.0f + Physics.gravity);
 		transform.Rotate(0f, hori * 2f, 0f);
+
+		if(Input.GetKeyDown(KeyCode.R)) {
+			SceneManager.LoadScene(0);
+		}
 	}
 }
