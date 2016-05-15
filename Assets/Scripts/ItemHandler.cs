@@ -16,6 +16,7 @@ public class ItemHandler : MonoBehaviour {
 	Dictionary<string, HandleItem> itemHandlers;
 	CharacterController character;
 	float targetHeight;
+	Material[] eyeReticleMaterials;
 	public GameObject heldItem;
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,9 @@ public class ItemHandler : MonoBehaviour {
 		heldItem = null;
 		defaultReticleColor.a = 0.3f;
 		highlightColor.a = 0.3f;
+		eyeReticleMaterials = new Material[2];
+		eyeReticleMaterials[0] = GameObject.FindGameObjectsWithTag("Reticle")[0].GetComponent<Renderer>().material;
+		eyeReticleMaterials[1] = GameObject.FindGameObjectsWithTag("Reticle")[1].GetComponent<Renderer>().material;
 		itemHandlers = new Dictionary<string, HandleItem>();
 		itemHandlers.Add("Cookie", HandleCookie);
 		itemHandlers.Add("Milk", HandleMilk);
@@ -42,11 +46,16 @@ public class ItemHandler : MonoBehaviour {
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
 				reticle.color = highlightColor;
+				foreach(Material mat in eyeReticleMaterials) {
+					mat.SetColor("_Color", new Color(0f, 0f, 1f, 1f));	
+				}
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
 
-				reticle.color = highlightColor;
+				foreach(Material mat in eyeReticleMaterials) {
+					mat.SetColor("_Color", new Color(0f, 0f, 1f, 1f));	
+				}
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
@@ -60,7 +69,9 @@ public class ItemHandler : MonoBehaviour {
 			}
 		}
 		else {
-			reticle.color = defaultReticleColor;
+			foreach(Material mat in eyeReticleMaterials) {
+				mat.SetColor("_Color", new Color(1f, 1f, 1f, 1f));	
+			}
 		}
 		if(character.height != targetHeight){
 			StartCoroutine(ScaleThatPokemon());
