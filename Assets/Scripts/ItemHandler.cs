@@ -10,8 +10,9 @@ public class ItemHandler : MonoBehaviour {
 	public float mediumSize = 1f;
 	public float largeSize = 4f;
 	public Image reticle;
-	private Color defaultReticleColor = Color.white;
-	private Color highlightColor = Color.blue;
+	public Color highlightColor = new Color(0f, 0f, 1f, 1f);
+	private Color defaultReticleColor = new Color(1f, 1f, 1f, 1f);
+	private bool lerpingShaderColor;
 	private delegate void HandleItem(GameObject item);
 	Dictionary<string, HandleItem> itemHandlers;
 	CharacterController character;
@@ -24,8 +25,6 @@ public class ItemHandler : MonoBehaviour {
 		targetHeight = character.height;
 		mediumSize = character.height;
 		heldItem = null;
-		defaultReticleColor.a = 0.3f;
-		highlightColor.a = 0.3f;
 		eyeReticleMaterials = new Material[2];
 		eyeReticleMaterials[0] = GameObject.FindGameObjectsWithTag("Reticle")[0].GetComponent<Renderer>().material;
 		eyeReticleMaterials[1] = GameObject.FindGameObjectsWithTag("Reticle")[1].GetComponent<Renderer>().material;
@@ -46,15 +45,15 @@ public class ItemHandler : MonoBehaviour {
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
 				reticle.color = highlightColor;
-				foreach(Material mat in eyeReticleMaterials) {
-					mat.SetColor("_Color", new Color(0f, 0f, 1f, 1f));	
+				if(eyeReticleMaterials[0].color == defaultReticleColor) {
+					StartCoroutine(LerpReticleTint(highlightColor));
 				}
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
 
-				foreach(Material mat in eyeReticleMaterials) {
-					mat.SetColor("_Color", new Color(0f, 0f, 1f, 1f));	
+				if(eyeReticleMaterials[0].color == defaultReticleColor) {
+					StartCoroutine(LerpReticleTint(highlightColor));
 				}
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
@@ -69,8 +68,8 @@ public class ItemHandler : MonoBehaviour {
 			}
 		}
 		else {
-			foreach(Material mat in eyeReticleMaterials) {
-				mat.SetColor("_Color", new Color(1f, 1f, 1f, 1f));	
+			if(eyeReticleMaterials[0].color == highlightColor) {
+				StartCoroutine(LerpReticleTint(defaultReticleColor));
 			}
 		}
 		if(character.height != targetHeight){
@@ -89,8 +88,24 @@ public class ItemHandler : MonoBehaviour {
 			t += 3f * Time.deltaTime;
 			yield return null;
 		}
-		Debug.Log(targetHeight);
 	}
+
+	IEnumerator LerpReticleTint(Color targetTint) {
+		float t = 0;
+		Color startTint = eyeReticleMaterials[0].color;
+		while(t < 1f) {
+			foreach(Material mat in eyeReticleMaterials) {
+				mat.SetColor("_Color", Color.Lerp(startTint, targetTint, t));
+				t += Time.deltaTime * 3;
+				yield return null;
+			}
+		}
+		foreach(Material mat in eyeReticleMaterials) {
+			mat.SetColor("_Color", targetTint);
+		}
+	}
+
+
 
 	void HandleCookie(GameObject cookie) {
 		targetHeight = targetHeight == mediumSize ? smallSize : mediumSize;
