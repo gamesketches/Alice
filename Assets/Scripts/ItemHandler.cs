@@ -113,6 +113,7 @@ public class ItemHandler : MonoBehaviour {
 	void HandleDrawer(GameObject drawer) {
 		if(heldItem.tag == "BobbyPin") {
 			StartCoroutine(drawer.GetComponent<DrawerScript>().openDrawer());
+			Destroy(heldItem);
 		}
 	}
 
