@@ -14,12 +14,14 @@ public class ItemHandler : MonoBehaviour {
 	private Color highlightColor = Color.blue;
 	private delegate void HandleItem(GameObject item);
 	Dictionary<string, HandleItem> itemHandlers;
-	Vector3 targetScale;
+	CharacterController character;
+	float targetHeight;
 	public GameObject heldItem;
 	// Use this for initialization
 	void Start () {
-		targetScale = gameObject.transform.localScale;
-		mediumSize = targetScale.x;
+		character = GetComponent<CharacterController>();
+		targetHeight = character.height;
+		mediumSize = character.height;
 		heldItem = null;
 		defaultReticleColor.a = 0.3f;
 		highlightColor.a = 0.3f;
@@ -60,7 +62,7 @@ public class ItemHandler : MonoBehaviour {
 		else {
 			reticle.color = defaultReticleColor;
 		}
-		if(gameObject.transform.localScale != targetScale) {
+		if(character.height != targetHeight){
 			StartCoroutine(ScaleThatPokemon());
 		}
 
@@ -69,19 +71,18 @@ public class ItemHandler : MonoBehaviour {
 
 	IEnumerator ScaleThatPokemon() {
 		float t = 0f;
-		Vector3 startingScale = gameObject.transform.localScale;
-		while(gameObject.transform.localScale != targetScale) {
-			gameObject.transform.localScale = Vector3.Lerp(startingScale, targetScale, t);
+		CharacterController character = GetComponent<CharacterController>();
+		float startingHeight = character.height;
+		while(character.height != targetHeight){
+			character.height = Mathf.Lerp(startingHeight, targetHeight, t);
 			t += 3f * Time.deltaTime;
 			yield return null;
 		}
+		Debug.Log(targetHeight);
 	}
 
 	void HandleCookie(GameObject cookie) {
-		float newSize = gameObject.transform.localScale.y == mediumSize ? smallSize : mediumSize;
-		targetScale = new Vector3(mediumSize, newSize, mediumSize);
-		//Vector3 tempPos = Camera.main.transform.localPosition;
-		//tempPos.z -=
+		targetHeight = targetHeight == mediumSize ? smallSize : mediumSize;
 		Camera.main.transform.localPosition = new Vector3(0f, 0f, 0f);
 		cookie.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -93,8 +94,7 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleMilk(GameObject milk) {
-		float newSize = gameObject.transform.localScale.y == mediumSize ? largeSize : mediumSize;
-		targetScale = new Vector3(mediumSize, newSize, mediumSize);
+		targetHeight = targetHeight == mediumSize ? largeSize : mediumSize;
 		milk.transform.parent = Camera.main.transform;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
