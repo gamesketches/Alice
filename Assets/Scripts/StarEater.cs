@@ -20,7 +20,6 @@ public class StarEater : MonoBehaviour {
 		RaycastHit hit;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		if(Physics.Raycast(PsychicRay, out hit, 100f)){
-			Debug.Log(hit.collider.gameObject.name);
 			if(hit.collider.gameObject.tag == "CandyStar" && Input.GetKeyDown(KeyCode.Space)) {
 				Vector3 scale = gameObject.transform.localScale;
 				scale += new Vector3(growBy, growBy, growBy);

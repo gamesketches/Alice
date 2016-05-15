@@ -3,10 +3,7 @@ using System.Collections;
 
 public class LockScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+	public GameObject hinge;
 	
 	// Update is called once per frame
 	void OnTriggerEnter (Collider other) {
@@ -18,10 +15,21 @@ public class LockScript : MonoBehaviour {
 		else if(other.gameObject.GetComponent<ItemHandler>().heldItem.tag == "Key") {
 			Destroy(other.gameObject.GetComponent<ItemHandler>().heldItem);
 			Debug.Log("went in through tag");
-			Destroy(gameObject);
+			StartCoroutine(OpenSesame());
 		}
 		else {
 			Debug.Log(other.gameObject.GetComponent<ItemHandler>().heldItem.tag);
+		}
+	}
+
+	IEnumerator OpenSesame() {
+		float t = 0;
+		Quaternion startRotation = hinge.transform.rotation;
+		Quaternion targetRotation = Quaternion.Euler(new Vector3(0, -90, 0));
+		while(t <= 1f) {
+			hinge.transform.rotation = Quaternion.Lerp(startRotation, targetRotation, t);
+			t += Time.deltaTime;
+			yield return null;
 		}
 	}
 }
