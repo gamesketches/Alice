@@ -13,8 +13,7 @@ Properties
 		   ZWrite On
 		   ColorMask 0
 		}
-        //Blend OneMinusDstColor OneMinusSrcAlpha //invert blending, so long as FG color is 1,1,1,1
-        Blend DstColor SrcColor // screen
+        Blend OneMinusDstColor OneMinusSrcAlpha //invert blending, so long as FG color is 1,1,1,1
         BlendOp Add
         
         Pass
