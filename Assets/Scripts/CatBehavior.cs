@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class CatBehavior : MonoBehaviour {
 
-	private Transform player;
+	private CharacterController player;
 	private Transform foodBowl;
 	private NavMeshAgent agent;
 	private AudioSource audio;
@@ -13,22 +13,22 @@ public class CatBehavior : MonoBehaviour {
 		audio = GetComponent<AudioSource>();
 		audio.Play();
 		audio.clip = Resources.Load<AudioClip>("Sounds/Cat/cathungrymeow");
-		player = GameObject.FindGameObjectWithTag("Player").transform;
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
 		foodBowl = GameObject.FindGameObjectWithTag("CatBowl").transform;
 		agent = GetComponent<NavMeshAgent>();
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if(other.gameObject.tag == "Player" && player.localScale.y < 1f) {
+		if(other.gameObject.tag == "Player" && player.height < 1f) {
 			SceneManager.LoadScene(1);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(player.localScale.y < 1f && foodBowl.childCount == 0) {
+		if(player.height < 1f && foodBowl.childCount == 0) {
 			checkAudioClip("catattack");
-			agent.SetDestination(player.position);
+			agent.SetDestination(player.transform.position);
 			agent.stoppingDistance = 0f;
 		}
 		else {
