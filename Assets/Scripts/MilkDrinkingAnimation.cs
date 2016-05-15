@@ -31,8 +31,6 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 		while(t < 1) {
 			
 			milkTransform.localScale = Vector3.Lerp(startingScale, targetScale, t);
-			//milkTransform.position = Vector3.Lerp(startingPosition, endingPosition, t);
-			milkTransform.Translate(new Vector3(0, objectRenderer.bounds.extents.y - lastY, 0));
 			t += Time.deltaTime;
 			yield return null;
 		}
