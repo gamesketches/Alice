@@ -5,18 +5,30 @@ using System.IO;
 public class TreeGenerator : MonoBehaviour {
 
 	public Vector3[] treePos;
+
 	public GameObject treePrefab;
 	public GameObject[] tree;
-	public int treeAmoutLmt;
 	public GameObject planet;
+
+	public int treeAmoutLmt;
 
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i < treeAmoutLmt; i++) 
 		{
-			treePos[i] = (Random.onUnitSphere) * 12f + planet.transform.position;
-			tree [i] = Instantiate(treePrefab, treePos[i], Quaternion.identity) as GameObject;
-			tree [i].transform.parent = this.transform;
+			treePos[i] = (Random.onUnitSphere) * 14f + planet.transform.position;
+			if (Vector3.Distance (treePos [i], new Vector3 (0f, 9.36f, 0f)) > 8f) {
+				tree [i] = Instantiate (treePrefab, treePos [i], Quaternion.identity) as GameObject;
+				tree [i].transform.parent = this.transform;
+			} else {
+				i--;
+			}
+		}
+
+		foreach (Transform child in transform) 
+		{
+			child.LookAt(planet.transform);
+			child.Rotate(0f, -90f, 90f);
 		}
 	}
 
