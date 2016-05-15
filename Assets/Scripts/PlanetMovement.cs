@@ -4,6 +4,7 @@ using System.Collections;
 public class PlanetMovement : MonoBehaviour {
 
 	public FauxGravityAttractor attractor;
+	public float speed;
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
@@ -21,7 +22,7 @@ public class PlanetMovement : MonoBehaviour {
 			return;
 		}
 
-		rb.MovePosition(rb.position + Camera.main.transform.TransformDirection(new Vector3(hori, 0, vert).normalized * 8.0f * Time.deltaTime));
+		rb.MovePosition(rb.position + Camera.main.transform.TransformDirection(new Vector3(hori, 0, vert).normalized * speed * Time.deltaTime));
 
 		attractor.Attract(transform);
 	}
