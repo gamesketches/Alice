@@ -17,7 +17,7 @@ public class CatStomachLining : MonoBehaviour {
 		for(int i = 1; i < transform.childCount; i++){
 			renderers.Add(transform.GetChild(i).GetComponent<Renderer>());
 		}
-		frames = Resources.LoadAll<Texture2D>("Textures");
+		frames = Resources.LoadAll<Texture2D>("Textures/BlackAndWhite");
 		timer = delay;
 		Invoke("ResetGame", timeToReset);
 	}
