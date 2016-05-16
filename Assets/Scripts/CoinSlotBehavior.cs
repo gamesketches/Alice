@@ -9,6 +9,7 @@ public class CoinSlotBehavior : MonoBehaviour {
 	void Start () {
 		audio = GetComponent<AudioSource>();
 		CreateObject();
+
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -20,5 +21,6 @@ public class CoinSlotBehavior : MonoBehaviour {
 		audio.Play();
 		Vector3 temp = gameObject.transform.position;
 		Instantiate(myObject, new Vector3(temp.x, temp.y -2f, temp.z), Quaternion.identity);
+
 	}
 }

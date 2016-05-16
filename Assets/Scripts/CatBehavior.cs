@@ -37,11 +37,9 @@ public class CatBehavior : MonoBehaviour {
 			checkAudioClip("cathungrymeow");
 			agent.SetDestination(foodBowl.position);
 			agent.stoppingDistance = 3f;
-			//idle.Play ("idle0");
 		}
 
 		if (Vector3.Distance(transform.position, foodBowl.position) < 3.5f) {
-			Debug.Log ("did this work");
 			idle.Play ("idle1"); 
 		}
 	}

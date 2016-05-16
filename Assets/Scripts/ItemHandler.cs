@@ -44,7 +44,6 @@ public class ItemHandler : MonoBehaviour {
 			Mathf.Abs(Mathf.Sin(Time.time + 0.25f * 4)),
 			Mathf.Abs(Mathf.Sin(Time.time + 0.5f * 5)),
 											0.5f);
-		Debug.Log(highlightColor);
 		RaycastHit hit;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		int layerMask = CreateLayerMask();
