@@ -10,7 +10,7 @@ public class ItemHandler : MonoBehaviour {
 	public float mediumSize = 1f;
 	public float largeSize = 4f;
 	public Image reticle;
-	public Color highlightColor = new Color(0f, 0f, 1f, 1f);
+	public Color highlightColor;
 	private Color defaultReticleColor = new Color(1f, 1f, 1f, 1f);
 	private bool lerpingShaderColor;
 	private delegate void HandleItem(GameObject item);
@@ -25,6 +25,7 @@ public class ItemHandler : MonoBehaviour {
 		targetHeight = character.height;
 		mediumSize = character.height;
 		heldItem = null;
+		highlightColor = new Color(0f, 0f, 0f, 1f);
 		eyeReticleMaterials = new Material[2];
 		eyeReticleMaterials[0] = GameObject.FindGameObjectsWithTag("Reticle")[0].GetComponent<Renderer>().material;
 		eyeReticleMaterials[1] = GameObject.FindGameObjectsWithTag("Reticle")[1].GetComponent<Renderer>().material;
@@ -39,21 +40,26 @@ public class ItemHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		highlightColor = new Color(Mathf.Abs(Mathf.Sin(Time.time * 3)),
+			Mathf.Abs(Mathf.Sin(Time.time + 0.25f * 4)),
+			Mathf.Abs(Mathf.Sin(Time.time + 0.5f * 5)),
+											0.5f);
+		Debug.Log(highlightColor);
 		RaycastHit hit;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
 				reticle.color = highlightColor;
-				if(eyeReticleMaterials[0].color == defaultReticleColor) {
-					StartCoroutine(LerpReticleTint(highlightColor));
+				foreach(Material mat in eyeReticleMaterials) {
+					mat.SetColor("_Color", highlightColor);
 				}
 			}
 			if(hit.collider.gameObject.layer == 9 && 
 				hit.collider.gameObject != heldItem) {
 
-				if(eyeReticleMaterials[0].color == defaultReticleColor) {
-					StartCoroutine(LerpReticleTint(highlightColor));
+				foreach(Material mat in eyeReticleMaterials) {
+					mat.SetColor("_Color", highlightColor);
 				}
 				if(Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
@@ -68,8 +74,8 @@ public class ItemHandler : MonoBehaviour {
 			}
 		}
 		else {
-			if(eyeReticleMaterials[0].color == highlightColor) {
-				StartCoroutine(LerpReticleTint(defaultReticleColor));
+			foreach(Material mat in eyeReticleMaterials) {
+				mat.SetColor("_Color", defaultReticleColor);
 			}
 		}
 		if(character.height != targetHeight){
@@ -92,6 +98,7 @@ public class ItemHandler : MonoBehaviour {
 
 	IEnumerator LerpReticleTint(Color targetTint) {
 		float t = 0;
+		yield return null;
 		Color startTint = eyeReticleMaterials[0].color;
 		while(t < 1f) {
 			foreach(Material mat in eyeReticleMaterials) {
