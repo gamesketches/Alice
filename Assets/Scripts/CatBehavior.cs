@@ -8,6 +8,7 @@ public class CatBehavior : MonoBehaviour {
 	private Transform foodBowl;
 	private NavMeshAgent agent;
 	private AudioSource audio;
+	public Animation idle; 
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent<AudioSource>();
@@ -16,6 +17,7 @@ public class CatBehavior : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
 		foodBowl = GameObject.FindGameObjectWithTag("CatBowl").transform;
 		agent = GetComponent<NavMeshAgent>();
+		idle = GetComponent<Animation> (); 
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -35,6 +37,12 @@ public class CatBehavior : MonoBehaviour {
 			checkAudioClip("cathungrymeow");
 			agent.SetDestination(foodBowl.position);
 			agent.stoppingDistance = 3f;
+			//idle.Play ("idle0");
+		}
+
+		if (Vector3.Distance(transform.position, foodBowl.position) < 3.5f) {
+			Debug.Log ("did this work");
+			idle.Play ("idle1"); 
 		}
 	}
 
