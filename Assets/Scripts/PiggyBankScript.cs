@@ -5,7 +5,7 @@ public class PiggyBankScript : MonoBehaviour {
 
 	public GameObject Bulb;
 	public float fallSpeed = 1;
-	private bool falling = true;
+	private bool falling = false;
 	AudioSource audio;
 //  Have this in for testing only
 	void Start() {
@@ -22,6 +22,7 @@ public class PiggyBankScript : MonoBehaviour {
 		audio.clip = Resources.Load<AudioClip>("Sounds/Piggybank shatter/shakefall");
 		Debug.Log(audio.clip.name);
 		audio.Play();
+		falling = true;
 		while(falling){
 			Vector3 oldPos = gameObject.transform.position;
 			oldPos.y -= fallSpeed * Time.deltaTime;
@@ -32,6 +33,7 @@ public class PiggyBankScript : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		Debug.Log("trigger entered");
+		if(falling) {
 		falling = false;
 		Vector3 shatteredPosition = gameObject.transform.position;
 		shatteredPosition.y += 1f;
@@ -39,5 +41,6 @@ public class PiggyBankScript : MonoBehaviour {
 		Instantiate(Resources.Load<GameObject>("prefabs/cookieCoin"), gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
 		Instantiate(Resources.Load<GameObject>("prefabs/milkCoin"), gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
 		Destroy(gameObject);
+		}
 	}
 }

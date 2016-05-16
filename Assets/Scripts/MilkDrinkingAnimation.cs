@@ -17,7 +17,6 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 	}
 	
 	public IEnumerator MilkAnimation() {
-		Debug.Log(milkTransform.position);
 		Vector3 startingScale = milkTransform.localScale;
 		Vector3 targetScale = milkTransform.localScale;
 		targetScale.y = 0f;

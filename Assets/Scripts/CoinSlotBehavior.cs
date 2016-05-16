@@ -8,7 +8,7 @@ public class CoinSlotBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent<AudioSource>();
-		CreateObject();
+		//CreateObject();
 
 	}
 
@@ -18,9 +18,9 @@ public class CoinSlotBehavior : MonoBehaviour {
 	}
 
 	public void CreateObject() {
-		audio.Play();
 		Vector3 temp = gameObject.transform.position;
 		Instantiate(myObject, new Vector3(temp.x, temp.y -2f, temp.z), Quaternion.identity);
 
+		audio.Play();
 	}
 }
