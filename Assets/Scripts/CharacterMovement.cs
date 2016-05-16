@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.VR;
 
 public class CharacterMovement : MonoBehaviour {
 
 	CharacterController controller;
 	// Use this for initialization
 	void Start () {
+		VRSettings.renderScale = 0.5f;
 		controller = GetComponent<CharacterController>();
 		}
 	
