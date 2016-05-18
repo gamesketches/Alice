@@ -12,6 +12,10 @@ public class LockScript : MonoBehaviour {
 			Debug.Log("KeyObject being found");
 			Destroy(gameObject);
 		}
+		else if(other.tag == "Key") {
+			Destroy(other.gameObject);
+			StartCoroutine(OpenSesame());
+		}
 		else if(other.gameObject.GetComponent<ItemHandler>().heldItem.tag == "Key") {
 			Destroy(other.gameObject.GetComponent<ItemHandler>().heldItem);
 			Debug.Log("went in through tag");
