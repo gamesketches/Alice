@@ -9,11 +9,15 @@ public class TreeGenerator : MonoBehaviour {
 	public GameObject treePrefab;
 	public GameObject[] tree;
 	public GameObject planet;
-
+	//public int numTrees;
 	public int treeAmoutLmt;
 
 	// Use this for initialization
 	void Start () {
+		/*foreach(GameObject plant in Resources.LoadAll<GameObject>("prefabs/planetPlants")) {
+			
+		}*/
+	//	tree = new GameObject[numTrees];
 		for (int i = 0; i < treeAmoutLmt; i++) 
 		{
 			treePos[i] = (Random.onUnitSphere) * 14f + planet.transform.position;
