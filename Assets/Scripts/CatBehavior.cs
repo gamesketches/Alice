@@ -32,6 +32,7 @@ public class CatBehavior : MonoBehaviour {
 			checkAudioClip("catattack");
 			agent.SetDestination(player.transform.position);
 			agent.stoppingDistance = 0f;
+			idle.Play("walk");
 		}
 		else {
 			checkAudioClip("cathungrymeow");
