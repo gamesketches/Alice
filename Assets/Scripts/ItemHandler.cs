@@ -60,14 +60,14 @@ public class ItemHandler : MonoBehaviour {
 				foreach(Material mat in eyeReticleMaterials) {
 					mat.SetColor("_Color", highlightColor);
 				}
-				if(Input.GetKeyDown(KeyCode.Space)){
+				if(Input.GetAxis("Fire2") != 0f){//Input.GetKeyDown(KeyCode.Space)){
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
 					heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
 					heldItem.layer = 10;
 				}
 			}
-			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetKeyDown(KeyCode.Space)){
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0){//Input.GetKeyDown(KeyCode.Space)){
 				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
 				itemFunction(hit.collider.gameObject);
 			}
