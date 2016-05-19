@@ -7,11 +7,12 @@ using UnityEngine.VR;
 public class CharacterMovement : MonoBehaviour {
 
 	CharacterController controller;
-	public int jumpDelay = 120;
+	public int stepDelay = 120;
 	public float hopDistance = 0.1f;
 	private int stepCounter = 0;
 	private float baseHeight;
 	private bool hopping;
+	AudioSource footstepAudio;
 	List<GameObject> furniture;
 	List<Vector3> furnitureStartPositions;
 	List<Vector3> furnitureTargetPositions;
@@ -19,6 +20,7 @@ public class CharacterMovement : MonoBehaviour {
 	void Start () {
 		hopping = false;
 		VRSettings.renderScale = 0.5f;
+		footstepAudio = GetComponent<AudioSource>();
 		controller = GetComponent<CharacterController>();
 		baseHeight = controller.height;
 		var goArray = FindObjectsOfType(typeof(GameObject));
@@ -48,11 +50,14 @@ public class CharacterMovement : MonoBehaviour {
 		controller.Move(Camera.main.transform.forward * vert * Time.deltaTime * 10.0f + Physics.gravity);
 		transform.Rotate(0f, hori * 2f, 0f);
 
-		if(vert != 0f && controller.height > baseHeight) {
+		if(vert != 0f) {
 			stepCounter++;
-			if(stepCounter > jumpDelay && !hopping) {
-				StartCoroutine(FurnitureHop());
-				stepCounter = 0;
+			if(stepCounter > stepDelay) {
+				if(!hopping && controller.height > baseHeight) {
+					StartCoroutine(FurnitureHop());
+				}
+					footstepAudio.Play();
+					stepCounter = 0;
 			}
 		}
 		else {
