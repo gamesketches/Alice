@@ -19,8 +19,10 @@ public class ItemHandler : MonoBehaviour {
 	float targetHeight;
 	Material[] eyeReticleMaterials;
 	public GameObject heldItem;
+	private bool fireButtonInUse;
 	// Use this for initialization
 	void Start () {
+		fireButtonInUse = false;
 		character = GetComponent<CharacterController>();
 		targetHeight = character.height;
 		mediumSize = character.height;
@@ -40,6 +42,9 @@ public class ItemHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetAxisRaw("Fire2") == 0) {
+			fireButtonInUse = false;
+		}
 		highlightColor = new Color(Mathf.Abs(Mathf.Sin(Time.time * 3)),
 			Mathf.Abs(Mathf.Sin(Time.time + 0.25f * 4)),
 			Mathf.Abs(Mathf.Sin(Time.time + 0.5f * 5)),
@@ -55,19 +60,22 @@ public class ItemHandler : MonoBehaviour {
 				}
 			}
 			if(hit.collider.gameObject.layer == 9 && 
-				hit.collider.gameObject != heldItem) {
+				hit.collider.gameObject != heldItem &&
+				heldItem == null) {
 
 				foreach(Material mat in eyeReticleMaterials) {
 					mat.SetColor("_Color", highlightColor);
 				}
-				if(Input.GetAxis("Fire2") != 0f){//Input.GetKeyDown(KeyCode.Space)){
+				if(Input.GetAxisRaw("Fire2") != 0 && !fireButtonInUse){//Input.GetKeyDown(KeyCode.Space)){
+					fireButtonInUse = true;
 					hit.collider.gameObject.transform.parent = Camera.main.transform;
 					heldItem = hit.collider.gameObject;
 					heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
 					heldItem.layer = 10;
 				}
 			}
-			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0){//Input.GetKeyDown(KeyCode.Space)){
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0 && !fireButtonInUse){//Input.GetKeyDown(KeyCode.Space)){
+				fireButtonInUse = true;
 				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
 				itemFunction(hit.collider.gameObject);
 			}
