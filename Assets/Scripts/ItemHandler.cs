@@ -98,7 +98,7 @@ public class ItemHandler : MonoBehaviour {
 		float startingHeight = character.height;
 		while(character.height != targetHeight){
 			character.height = Mathf.Lerp(startingHeight, targetHeight, t);
-			t += 3f * Time.deltaTime;
+			t += 1.5f * Time.deltaTime;
 			yield return null;
 		}
 	}
