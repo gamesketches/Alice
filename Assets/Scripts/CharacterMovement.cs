@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.VR;
@@ -62,9 +61,6 @@ public class CharacterMovement : MonoBehaviour {
 		}
 		else {
 			stepCounter = 0;
-		}
-		if(Input.GetKeyDown(KeyCode.R)) {
-			SceneManager.LoadScene(0);
 		}
 	}
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ItemHandler : MonoBehaviour {
 
@@ -20,8 +21,10 @@ public class ItemHandler : MonoBehaviour {
 	Material[] eyeReticleMaterials;
 	public GameObject heldItem;
 	private bool fireButtonInUse;
+	private bool reseting;
 	// Use this for initialization
 	void Start () {
+		reseting = false;
 		fireButtonInUse = false;
 		character = GetComponent<CharacterController>();
 		targetHeight = character.height;
@@ -45,10 +48,16 @@ public class ItemHandler : MonoBehaviour {
 		if(Input.GetAxisRaw("Fire2") == 0) {
 			fireButtonInUse = false;
 		}
-		highlightColor = new Color(Mathf.Abs(Mathf.Sin(Time.time * 3)),
-			Mathf.Abs(Mathf.Sin(Time.time + 0.25f * 4)),
-			Mathf.Abs(Mathf.Sin(Time.time + 0.5f * 5)),
-											0.5f);
+		if(!reseting) {
+			highlightColor = new Color(Mathf.Abs(Mathf.Sin(Time.time * 3)),
+				Mathf.Abs(Mathf.Sin(Time.time + 0.25f * 4)),
+				Mathf.Abs(Mathf.Sin(Time.time + 0.5f * 5)),
+												0.5f);
+		}
+		else {
+			highlightColor = Color.black;
+			defaultReticleColor = Color.black;
+		}
 		RaycastHit hit;
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		int layerMask = CreateLayerMask();
@@ -88,6 +97,11 @@ public class ItemHandler : MonoBehaviour {
 		if(character.height != targetHeight){
 			StartCoroutine(ScaleThatPokemon());
 		}
+		if(Input.GetKeyDown(KeyCode.R)) {
+			//SceneManager.LoadScene(0);
+			reseting = true;
+			StartCoroutine(ResetGame());
+		}
 
 		Debug.DrawRay(PsychicRay.origin, PsychicRay.direction * rayLength);
 	}
@@ -113,13 +127,32 @@ public class ItemHandler : MonoBehaviour {
 				t += Time.deltaTime * 3;
 				yield return null;
 			}
+
 		}
 		foreach(Material mat in eyeReticleMaterials) {
 			mat.SetColor("_Color", targetTint);
 		}
 	}
 
-
+	IEnumerator ResetGame() {
+		float t = 0f;
+		yield return null;
+		GameObject[] reticles = GameObject.FindGameObjectsWithTag("Reticle");
+		Color startTint = eyeReticleMaterials[0].color;
+		Color endTint = new Color(0f, 0f, 0f);
+		while(t < 1f) {
+			foreach(Material mat in eyeReticleMaterials) {
+				mat.SetColor("_Color", Color.Lerp(startTint, endTint, t * 3));
+				t += Time.deltaTime;
+			}
+			foreach(GameObject reticle in reticles) {
+				float scaleAmount = 1f + (t * 7);
+				reticle.transform.localScale = new Vector3(scaleAmount, scaleAmount, scaleAmount);
+				yield return null;
+			}
+		}
+		SceneManager.LoadScene(0);
+	}
 
 	void HandleCookie(GameObject cookie) {
 		targetHeight = targetHeight == mediumSize ? smallSize : mediumSize;
