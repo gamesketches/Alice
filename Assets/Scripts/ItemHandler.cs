@@ -189,9 +189,12 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleDrawer(GameObject drawer) {
-		if(heldItem.tag == "BobbyPin") {
+		if(heldItem != null && heldItem.tag == "BobbyPin") {
 			StartCoroutine(drawer.GetComponent<DrawerScript>().openDrawer());
 			Destroy(heldItem);
+		}
+		else {
+			drawer.GetComponent<AudioSource>().Play();
 		}
 	}
 
