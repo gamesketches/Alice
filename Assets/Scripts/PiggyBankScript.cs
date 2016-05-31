@@ -37,8 +37,10 @@ public class PiggyBankScript : MonoBehaviour {
 		falling = false;
 		Vector3 shatteredPosition = gameObject.transform.position;
 		shatteredPosition.y += 1f;
+		Vector3 coinPos = gameObject.transform.position;
+		coinPos.x += 0.8f;
 		Instantiate(Resources.Load<GameObject>("prefabs/PiggyBankShattered"),shatteredPosition, Quaternion.identity);
-		Instantiate(Resources.Load<GameObject>("prefabs/cookieCoin"), gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
+		Instantiate(Resources.Load<GameObject>("prefabs/cookieCoin"), coinPos, Quaternion.Euler(new Vector3(0, 0, 90)));
 		Instantiate(Resources.Load<GameObject>("prefabs/milkCoin"), gameObject.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
 		Destroy(gameObject);
 		}
