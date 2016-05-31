@@ -41,6 +41,7 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("Drawer", HandleDrawer);
 		itemHandlers.Add("PiggyBank", HandlePiggyBank);
 		itemHandlers.Add("CatBowl", HandleCatBowl);
+		//itemHandlers.Add("Teacup", HandleTeacup);
 	}
 	
 	// Update is called once per frame
@@ -75,12 +76,17 @@ public class ItemHandler : MonoBehaviour {
 				foreach(Material mat in eyeReticleMaterials) {
 					mat.SetColor("_Color", highlightColor);
 				}
-				if(Input.GetAxisRaw("Fire2") != 0 && !fireButtonInUse){//Input.GetKeyDown(KeyCode.Space)){
+				if(Input.GetAxisRaw("Fire2") != 0 && !fireButtonInUse){
 					fireButtonInUse = true;
-					hit.collider.gameObject.transform.parent = Camera.main.transform;
-					heldItem = hit.collider.gameObject;
-					heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
-					heldItem.layer = 10;
+					if(hit.collider.gameObject.tag == "Coin" && character.height == smallSize) {
+						Debug.Log("should play a grunt sound here");
+					}
+					else {
+						hit.collider.gameObject.transform.parent = Camera.main.transform;
+						heldItem = hit.collider.gameObject;
+						heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
+						heldItem.layer = 10;
+					}
 				}
 			}
 			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0 && !fireButtonInUse){//Input.GetKeyDown(KeyCode.Space)){
@@ -98,7 +104,6 @@ public class ItemHandler : MonoBehaviour {
 			StartCoroutine(ScaleThatPokemon());
 		}
 		if(Input.GetKeyDown(KeyCode.R)) {
-			//SceneManager.LoadScene(0);
 			reseting = true;
 			StartCoroutine(ResetGame());
 		}
