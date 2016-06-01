@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ItemHandler : MonoBehaviour {
 
-	public Animation happy; 
+	//public Animation happy; 
 	public AudioSource audio; 
 	public float rayLength;
 	public float smallSize = 0.05f;
@@ -45,9 +45,9 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("CatBowl", HandleCatBowl);
 		itemHandlers.Add ("Cat", HandleCat); 
 
-		happy = GetComponent<Animation> (); 
+		//happy = GetComponent<Animation> (); 
 		audio = GetComponent<AudioSource> (); 
-		//itemHandlers.Add("Teacup", HandleTeacup);
+		itemHandlers.Add("Teacup", HandleTeacup);
 	}
 	
 	// Update is called once per frame
@@ -88,6 +88,10 @@ public class ItemHandler : MonoBehaviour {
 						Debug.Log("should play a grunt sound here");
 					}
 					else {
+						AudioSource pickupSound = hit.collider.gameObject.GetComponent<AudioSource>();
+						if(pickupSound != null) {
+							pickupSound.Play();
+						}
 						hit.collider.gameObject.transform.parent = Camera.main.transform;
 						heldItem = hit.collider.gameObject;
 						heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
@@ -217,14 +221,20 @@ public class ItemHandler : MonoBehaviour {
 		}
 	}
 
-		void HandleCat(GameObject cat){
+	void HandleCat(GameObject cat){
 //			if (heldItem.tag == "Cat") {
 		Debug.Log ("I pet you"); 
 			audio.Play (); 
-			happy.Play ("happy"); 
+			//happy.Play ("happy"); 
 
 		}
 
+	void HandleTeacup(GameObject teacup) {
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		teacup.layer = 10;
+		StartCoroutine(teacup.GetComponent<TeaDrinkAnimation>().TeaCupTilt(PsychicRay.GetPoint(rayLength / 3)));
+		StartCoroutine(ResetGame());
+	}
 
 	int CreateLayerMask() {
 		int layerMask1 = 1 << 8;
