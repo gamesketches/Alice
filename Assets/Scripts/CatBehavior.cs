@@ -32,7 +32,6 @@ public class CatBehavior : MonoBehaviour {
 			checkAudioClip("catattack");
 			agent.SetDestination(player.transform.position);
 			agent.stoppingDistance = 0f;
-			idle.Play ("anger"); 
 			idle.Play("walk");
 		}
 		else {
@@ -41,25 +40,32 @@ public class CatBehavior : MonoBehaviour {
 			agent.stoppingDistance = 3f;
 		}
 
-		if (Vector3.Distance(transform.position, foodBowl.position) < 3.5f && foodBowl.childCount != 0) {
-			idle.Play ("idle1"); 
-			checkAudioClip ("cateat");
+		if (Vector3.Distance(transform.position, foodBowl.position) < 3.5f) {
+			if(idle.IsPlaying("happy")){
+				idle.PlayQueued("idle1"); 
+			}
+			else {
+				idle.Play("idle1");
+			}
+
+			if(foodBowl.childCount != 0) {
+				checkAudioClip ("cateat");
+			}
 		}
 	}
 
-	void checkAudioClip(string clipName) {
+	public void checkAudioClip(string clipName) {
 		if(clipName == "cathungrymeow") {
 			if(!audio.isPlaying) {
 				audio.clip = Resources.Load<AudioClip>(string.Concat("Sounds/Cat/", clipName));
 				audio.Play();
-				Debug.Log(audio.isPlaying);
 			}
 			return;
 		}
 		else if(audio.clip.name == clipName) {
 			return;
 		}
-		else{//(audio.clip.name != clipName) {
+		else{
 			audio.clip = Resources.Load<AudioClip>(string.Concat("Sounds/Cat/", clipName));
 		}
 			audio.Play();
