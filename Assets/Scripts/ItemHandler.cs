@@ -82,6 +82,10 @@ public class ItemHandler : MonoBehaviour {
 						Debug.Log("should play a grunt sound here");
 					}
 					else {
+						AudioSource pickupSound = hit.collider.gameObject.GetComponent<AudioSource>();
+						if(pickupSound != null) {
+							pickupSound.Play();
+						}
 						hit.collider.gameObject.transform.parent = Camera.main.transform;
 						heldItem = hit.collider.gameObject;
 						heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
