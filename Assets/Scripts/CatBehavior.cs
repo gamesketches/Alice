@@ -32,7 +32,9 @@ public class CatBehavior : MonoBehaviour {
 			checkAudioClip("catattack");
 			agent.SetDestination(player.transform.position);
 			agent.stoppingDistance = 0f;
+			idle.Play ("angry"); 
 			idle.Play("walk");
+
 		}
 		else {
 			checkAudioClip("cathungrymeow");
@@ -42,6 +44,7 @@ public class CatBehavior : MonoBehaviour {
 
 		if (Vector3.Distance(transform.position, foodBowl.position) < 3.5f) {
 			idle.Play ("idle1"); 
+			checkAudioClip ("cateat");
 		}
 	}
 

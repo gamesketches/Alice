@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ItemHandler : MonoBehaviour {
 
+	public Animation happy; 
+	public AudioSource audio; 
 	public float rayLength;
 	public float smallSize = 0.05f;
 	public float mediumSize = 1f;
@@ -41,6 +43,10 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("Drawer", HandleDrawer);
 		itemHandlers.Add("PiggyBank", HandlePiggyBank);
 		itemHandlers.Add("CatBowl", HandleCatBowl);
+		itemHandlers.Add ("Cat", HandleCat); 
+
+		happy = GetComponent<Animation> (); 
+		audio = GetComponent<AudioSource> (); 
 		//itemHandlers.Add("Teacup", HandleTeacup);
 	}
 	
@@ -203,13 +209,22 @@ public class ItemHandler : MonoBehaviour {
 	}
 
 	void HandleCatBowl(GameObject catbowl) {
-		if(heldItem.tag == "Fish Food") {
+		if (heldItem.tag == "Fish Food") {
 			heldItem.transform.position = catbowl.transform.position;
 			heldItem.transform.parent = catbowl.transform;
-			Debug.Log(heldItem.transform.parent.GetChild(0));
+			Debug.Log (heldItem.transform.parent.GetChild (0));
 			heldItem = null;
 		}
 	}
+
+		void HandleCat(GameObject cat){
+//			if (heldItem.tag == "Cat") {
+		Debug.Log ("I pet you"); 
+			audio.Play (); 
+			happy.Play ("happy"); 
+
+		}
+
 
 	int CreateLayerMask() {
 		int layerMask1 = 1 << 8;
