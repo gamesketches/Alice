@@ -41,7 +41,7 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("Drawer", HandleDrawer);
 		itemHandlers.Add("PiggyBank", HandlePiggyBank);
 		itemHandlers.Add("CatBowl", HandleCatBowl);
-		//itemHandlers.Add("Teacup", HandleTeacup);
+		itemHandlers.Add("Teacup", HandleTeacup);
 	}
 	
 	// Update is called once per frame
@@ -209,6 +209,13 @@ public class ItemHandler : MonoBehaviour {
 			Debug.Log(heldItem.transform.parent.GetChild(0));
 			heldItem = null;
 		}
+	}
+
+	void HandleTeacup(GameObject teacup) {
+		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+		teacup.layer = 10;
+		StartCoroutine(teacup.GetComponent<TeaDrinkAnimation>().TeaCupTilt(PsychicRay.GetPoint(rayLength / 3)));
+		StartCoroutine(ResetGame());
 	}
 
 	int CreateLayerMask() {
