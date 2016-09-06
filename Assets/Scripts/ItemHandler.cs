@@ -22,11 +22,13 @@ public class ItemHandler : MonoBehaviour {
 	public GameObject heldItem;
 	private bool fireButtonInUse;
 	private bool reseting;
+	private DialogueManager dialogueManager;
 	// Use this for initialization
 	void Start () {
 		reseting = false;
 		fireButtonInUse = false;
 		character = GetComponent<CharacterController>();
+		dialogueManager = GetComponent<DialogueManager>();
 		targetHeight = character.height;
 		mediumSize = character.height;
 		heldItem = null;
@@ -64,6 +66,7 @@ public class ItemHandler : MonoBehaviour {
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
+			dialogueManager.TryDialogueClip(hit.collider.tag);
 			if(hit.collider.gameObject.layer == 8) {
 				reticle.color = highlightColor;
 				foreach(Material mat in eyeReticleMaterials) {
@@ -94,7 +97,7 @@ public class ItemHandler : MonoBehaviour {
 					}
 				}
 			}
-			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0 && !fireButtonInUse){//Input.GetKeyDown(KeyCode.Space)){
+			if(itemHandlers.ContainsKey(hit.collider.gameObject.tag) && Input.GetAxis("Fire2") != 0 && !fireButtonInUse){
 				fireButtonInUse = true;
 				HandleItem itemFunction = itemHandlers[hit.collider.gameObject.tag];
 				itemFunction(hit.collider.gameObject);
