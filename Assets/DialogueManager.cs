@@ -12,11 +12,11 @@ public class DialogueManager : MonoBehaviour {
 		audio = gameObject.GetComponent<AudioSource>();
 		dialogue = new Dictionary<string, AudioClip>();
 		teaCupClips = new List<AudioClip>();
-		AudioClip[] clips = Resources.LoadAll<AudioClip>("Resources/Sounds/Dialogue/");
+		AudioClip[] clips = Resources.LoadAll<AudioClip>("Sounds/Dialogue");
 		foreach(AudioClip clip in clips) {
 			dialogue.Add(clip.name, clip);
 		}
-		clips = Resources.LoadAll<AudioClip>("Resources/Sounds/Dialogue/teaCup");
+		clips = Resources.LoadAll<AudioClip>("Sounds/Dialogue/teaCup");
 		foreach(AudioClip clip in clips) {
 			teaCupClips.Add(clip);
 		}
@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour {
 	
 	public void TryDialogueClip(string objectName) {
 		AudioClip temp;
+		Debug.Log(objectName);
 		if(objectName == "teaCup" && teaCupClips.Count > 0) {
 			audio.clip = teaCupClips[teaCupClips.Count - 1];
 			teaCupClips.RemoveAt(teaCupClips.Count - 1);
