@@ -127,7 +127,7 @@ public class ItemHandler : MonoBehaviour {
 		CharacterController character = GetComponent<CharacterController>();
 		float startingHeight = character.height;
 		while(character.height != targetHeight){
-			character.height = Mathf.Lerp(startingHeight, targetHeight, t);
+			character.height = Mathf.SmoothStep(startingHeight, targetHeight, t);
 			t += 1.5f * Time.deltaTime;
 			yield return null;
 		}
