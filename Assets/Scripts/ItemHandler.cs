@@ -201,6 +201,7 @@ public class ItemHandler : MonoBehaviour {
 
 	void HandleDrawer(GameObject drawer) {
 		if(heldItem != null && heldItem.tag == "BobbyPin") {
+			dialogueManager.TryDialogueClip("DrawerOpen");
 			StartCoroutine(drawer.GetComponent<DrawerScript>().openDrawer());
 			Destroy(heldItem);
 		}

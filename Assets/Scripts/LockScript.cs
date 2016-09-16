@@ -21,6 +21,9 @@ public class LockScript : MonoBehaviour {
 			Debug.Log("went in through tag");
 			StartCoroutine(OpenSesame());
 		}
+		else if(other.tag == "BobbyPin") {
+			GameObject.Find("Alice").GetComponent<DialogueManager>().TryDialogueClip("doorBobby");
+		}
 		else {
 			Debug.Log(other.gameObject.GetComponent<ItemHandler>().heldItem.tag);
 		}
