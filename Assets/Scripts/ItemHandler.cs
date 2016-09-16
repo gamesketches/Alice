@@ -66,7 +66,6 @@ public class ItemHandler : MonoBehaviour {
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
-			dialogueManager.TryDialogueClip(hit.collider.tag);
 			if(hit.collider.gameObject.layer == 8) {
 				reticle.color = highlightColor;
 				foreach(Material mat in eyeReticleMaterials) {
@@ -107,6 +106,10 @@ public class ItemHandler : MonoBehaviour {
 			foreach(Material mat in eyeReticleMaterials) {
 				mat.SetColor("_Color", defaultReticleColor);
 			}
+		}
+		if(Physics.Raycast(PsychicRay, out hit, rayLength)){
+			dialogueManager.TryDialogueClip(hit.collider.name);
+			Debug.Log(hit.collider.name);
 		}
 		if(character.height != targetHeight){
 			StartCoroutine(ScaleThatPokemon());
