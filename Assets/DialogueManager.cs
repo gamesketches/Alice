@@ -30,7 +30,7 @@ public class DialogueManager : MonoBehaviour {
 			audio.clip = teaCupClips[teaCupClips.Count - 1];
 			teaCupClips.RemoveAt(teaCupClips.Count - 1);
 		}
-		else if(dialogue.TryGetValue(objectName, out temp)) {
+		else if(!audio.isPlaying && dialogue.TryGetValue(objectName, out temp)) {
 			audio.clip = temp;
 			dialogue.Remove(objectName);
 		}

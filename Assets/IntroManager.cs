@@ -52,6 +52,10 @@ public class IntroManager : MonoBehaviour {
 				}
 			}
 		}
+
+		if(Input.GetAxis("Fire2") != 0) {
+			SceneManager.LoadScene(0);
+		}
 	}
 
 	IEnumerator FadeInLogoAndText() {
