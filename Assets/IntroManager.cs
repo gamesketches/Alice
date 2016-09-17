@@ -7,7 +7,7 @@ public class IntroManager : MonoBehaviour {
 
 	Text motherText;
 	Text instructionText;
-	Image logo;
+	Image[] logos;
 	AudioClip[] aliceLines;
 	AudioSource audio;
 	public string[] motherLines;
@@ -26,7 +26,11 @@ public class IntroManager : MonoBehaviour {
 		motherText.text = motherLines[textIter];
 		instructionText = GameObject.Find("InstructionText").GetComponent<Text>();
 		audio = GetComponent<AudioSource>();
-		logo = GameObject.Find("Logo").GetComponent<Image>();
+		GameObject[] temp = GameObject.FindGameObjectsWithTag("logo");
+		logos = new Image[temp.Length];
+		for(int i = 0; i < temp.Length; i++) {
+			logos[i] = temp[i].GetComponent<Image>();
+		}
 	}
 	
 	// Update is called once per frame
@@ -66,20 +70,29 @@ public class IntroManager : MonoBehaviour {
 		Debug.Log("Audio is no longer playing");
 		float t = 0;
 		Color[] textColor = new Color[2];
-		Color[] logoColors = new Color[2];
 		textColor[0] = instructionText.color;
 		textColor[1] = instructionText.color;
 		textColor[1].a = 1f;
-		logoColors[0] = logo.color;
-		logoColors[1] = logo.color;
-		logoColors[1].a = 1f;
-		logo.GetComponent<RotateLogo>().started = true;
+		foreach(Image logo in logos) {
+			logo.GetComponent<RotateLogo>().started = true;
+			StartCoroutine(FadeInLogo(logo));
+		}
 		while(t < 1) {
-			logo.color = Color.Lerp(logoColors[0], logoColors[1], t);
 			instructionText.color = Color.Lerp(textColor[0], textColor[1], t);
 			t += Time.deltaTime;
 			yield return null;
 		}
 		instructionText.GetComponent<MenuFadeInAndOut>().started = true;
+	}
+
+	IEnumerator FadeInLogo(Image logo) {
+		float t = 0;
+		Color[] logoColors = new Color[] {logo.color, logo.color};
+		logoColors[1].a = 1f;
+		while(t < 1) {
+			logo.color = Color.Lerp(logoColors[0], logoColors[1], t);
+			t+= Time.deltaTime;
+			yield return null;
+		}
 	}
 }
