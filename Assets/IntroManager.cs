@@ -73,11 +73,13 @@ public class IntroManager : MonoBehaviour {
 		logoColors[0] = logo.color;
 		logoColors[1] = logo.color;
 		logoColors[1].a = 1f;
+		logo.GetComponent<RotateLogo>().started = true;
 		while(t < 1) {
 			logo.color = Color.Lerp(logoColors[0], logoColors[1], t);
 			instructionText.color = Color.Lerp(textColor[0], textColor[1], t);
 			t += Time.deltaTime;
 			yield return null;
 		}
+		instructionText.GetComponent<MenuFadeInAndOut>().started = true;
 	}
 }
