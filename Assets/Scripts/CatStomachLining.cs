@@ -8,6 +8,7 @@ public class CatStomachLining : MonoBehaviour {
 	Texture2D[] frames;
 	public int delay;
 	public float timeToReset;
+	public string animationPath;
 	private int timer;
 	private int frameCount = 0;
 	private List<Renderer> renderers;
@@ -17,7 +18,7 @@ public class CatStomachLining : MonoBehaviour {
 		for(int i = 1; i < transform.childCount; i++){
 			renderers.Add(transform.GetChild(i).GetComponent<Renderer>());
 		}
-		frames = Resources.LoadAll<Texture2D>("Textures/BlackAndWhite");
+		frames = Resources.LoadAll<Texture2D>(animationPath);
 		timer = delay;
 		Invoke("ResetGame", timeToReset);
 	}
