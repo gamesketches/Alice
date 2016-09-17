@@ -67,7 +67,6 @@ public class ItemHandler : MonoBehaviour {
 		int layerMask = CreateLayerMask();
 		if(Physics.Raycast(PsychicRay, out hit, rayLength, layerMask)){
 			if(hit.collider.gameObject.layer == 8) {
-				reticle.color = highlightColor;
 				foreach(Material mat in eyeReticleMaterials) {
 					mat.SetColor("_Color", highlightColor);
 				}
@@ -109,7 +108,6 @@ public class ItemHandler : MonoBehaviour {
 		}
 		if(Physics.Raycast(PsychicRay, out hit, rayLength)){
 			dialogueManager.TryDialogueClip(hit.collider.name);
-			Debug.Log(hit.collider.name);
 		}
 		if(character.height != targetHeight){
 			StartCoroutine(ScaleThatPokemon());

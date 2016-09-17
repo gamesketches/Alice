@@ -25,7 +25,6 @@ public class DialogueManager : MonoBehaviour {
 	
 	public void TryDialogueClip(string objectName) {
 		AudioClip temp;
-		Debug.Log(objectName);
 		if(objectName == "teaCup" && teaCupClips.Count > 0) {
 			audio.clip = teaCupClips[teaCupClips.Count - 1];
 			teaCupClips.RemoveAt(teaCupClips.Count - 1);
