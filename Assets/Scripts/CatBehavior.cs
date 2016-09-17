@@ -22,6 +22,7 @@ public class CatBehavior : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if(other.gameObject.tag == "Player" && player.height < 1f) {
+			ObjectLogger.eatenByCat = true;
 			SceneManager.LoadScene(1);
 		}
 	}

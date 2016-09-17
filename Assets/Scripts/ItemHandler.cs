@@ -92,6 +92,9 @@ public class ItemHandler : MonoBehaviour {
 						heldItem = hit.collider.gameObject;
 						heldItem.transform.position = PsychicRay.GetPoint(rayLength / 2);
 						heldItem.layer = 10;
+						if(heldItem.tag == "BobbyPin") {
+							ObjectLogger.bobbyPinObtained = true;
+						}
 					}
 				}
 			}
@@ -177,7 +180,7 @@ public class ItemHandler : MonoBehaviour {
 		cookie.layer = 10;
 		cookie.transform.Rotate(new Vector3(0f, 0f, 90f));
 		StartCoroutine(cookie.gameObject.GetComponent<CookieEatingAnimation>().CookieAnimation());
-		Debug.Log("cookie");
+		ObjectLogger.goodieConsumed = true;
 	}
 
 	void HandleMilk(GameObject milk) {
@@ -187,7 +190,7 @@ public class ItemHandler : MonoBehaviour {
 		milk.transform.position = PsychicRay.GetPoint(rayLength / 3);
 		milk.layer = 10;
 		StartCoroutine(milk.gameObject.GetComponent<MilkDrinkingAnimation>().MilkAnimation());
-		Debug.Log("milk");
+		ObjectLogger.goodieConsumed = true;
 	}
 
 	void HandleCoinSlot(GameObject coinSlot) {
@@ -202,6 +205,7 @@ public class ItemHandler : MonoBehaviour {
 			dialogueManager.TryDialogueClip("DrawerOpen");
 			StartCoroutine(drawer.GetComponent<DrawerScript>().openDrawer());
 			Destroy(heldItem);
+			ObjectLogger.drawerOpened = true;
 		}
 		else {
 			drawer.GetComponent<AudioSource>().Play();
