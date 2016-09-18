@@ -168,7 +168,7 @@ public class ItemHandler : MonoBehaviour {
 				yield return null;
 			}
 		}
-		SceneManager.LoadScene(0);
+		SceneManager.LoadScene(1);
 	}
 
 	void HandleCookie(GameObject cookie) {

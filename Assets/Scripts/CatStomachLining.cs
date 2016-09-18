@@ -44,7 +44,7 @@ public class CatStomachLining : MonoBehaviour {
 	}
 
 	string DetermineWallAnimation() {
-		string path = "";
+		string path = "Textures/PoisonEnd";
 		if(ObjectLogger.eatenByCat) {
 			path = "Textures/BlackAndWhite";
 		}
