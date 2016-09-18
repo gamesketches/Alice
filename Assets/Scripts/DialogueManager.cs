@@ -25,11 +25,14 @@ public class DialogueManager : MonoBehaviour {
 	
 	public void TryDialogueClip(string objectName) {
 		AudioClip temp;
-		if(objectName == "teaCup" && teaCupClips.Count > 0) {
+		if(audio.isPlaying) {
+			return;
+		}
+		else if(objectName == "teaCup" && teaCupClips.Count > 0) {
 			audio.clip = teaCupClips[teaCupClips.Count - 1];
 			teaCupClips.RemoveAt(teaCupClips.Count - 1);
 		}
-		else if(!audio.isPlaying && dialogue.TryGetValue(objectName, out temp)) {
+		else if(dialogue.TryGetValue(objectName, out temp)) {
 			audio.clip = temp;
 			dialogue.Remove(objectName);
 		}

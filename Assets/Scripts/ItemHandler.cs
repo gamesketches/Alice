@@ -237,6 +237,7 @@ public class ItemHandler : MonoBehaviour {
 	void HandleTeacup(GameObject teacup) {
 		Ray PsychicRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		teacup.layer = 10;
+		reseting = true;
 		StartCoroutine(teacup.GetComponent<TeaDrinkAnimation>().TeaCupTilt(PsychicRay.GetPoint(rayLength / 3)));
 		StartCoroutine(ResetGame());
 	}
