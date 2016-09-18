@@ -11,9 +11,11 @@ public class CatStomachLining : MonoBehaviour {
 	private int timer;
 	private int frameCount = 0;
 	private List<Renderer> renderers;
+	AudioSource audio;
 	// Use this for initialization
 	void Start () {
-		
+
+		audio = Camera.main.GetComponent<AudioSource>();
 		renderers = new List<Renderer>();
 		for(int i = 1; i < transform.childCount; i++){
 			renderers.Add(transform.GetChild(i).GetComponent<Renderer>());
@@ -21,6 +23,8 @@ public class CatStomachLining : MonoBehaviour {
 		frames = Resources.LoadAll<Texture2D>(DetermineWallAnimation());
 		timer = delay;
 		Invoke("ResetGame", timeToReset);
+
+		audio.Play();
 	}
 	
 	// Update is called once per frame
@@ -45,7 +49,9 @@ public class CatStomachLining : MonoBehaviour {
 
 	string DetermineWallAnimation() {
 		string path = "Textures/PoisonEnd";
+		audio.clip = Resources.Load<AudioClip>("Sounds/Dialogue/teaCup/teaDeath");
 		if(ObjectLogger.eatenByCat) {
+			audio.clip = Resources.Load<AudioClip>("Sounds/Dialogue/catDeath");
 			path = "Textures/BlackAndWhite";
 		}
 		else if(ObjectLogger.drawerOpened){

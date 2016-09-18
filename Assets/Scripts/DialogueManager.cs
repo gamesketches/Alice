@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour {
 			teaCupClips.Add(clip);
 		}
 		teaCupClips.Reverse();
+		teaCupClips.RemoveAt(teaCupClips.Count - 1);
 	}
 	
 	public void TryDialogueClip(string objectName) {

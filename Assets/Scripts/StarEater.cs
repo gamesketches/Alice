@@ -11,8 +11,7 @@ public class StarEater : MonoBehaviour {
 	void Start () {
 		rewardSound = 0;
 		audio = GetComponent<AudioSource>();
-		rewardSounds = Resources.LoadAll<AudioClip>("Sounds/Reward Sound/");
-		audio.clip = rewardSounds[rewardSound];
+		StartCoroutine(LoadAudio());
 	}
 	
 	// Update is called once per frame
@@ -29,5 +28,13 @@ public class StarEater : MonoBehaviour {
 			}
 		}
 		Debug.DrawRay(PsychicRay.origin, PsychicRay.direction * 100f);
+	}
+
+	IEnumerator LoadAudio() {
+		while(audio.isPlaying) {
+			yield return null;
+		}
+		rewardSounds = Resources.LoadAll<AudioClip>("Sounds/Reward Sound/");
+		audio.clip = rewardSounds[rewardSound];
 	}
 }

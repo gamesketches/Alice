@@ -45,6 +45,7 @@ public class ItemHandler : MonoBehaviour {
 		itemHandlers.Add("CatBowl", HandleCatBowl);
 		itemHandlers.Add ("Cat", HandleCat); 
 		itemHandlers.Add("Teacup", HandleTeacup);
+		itemHandlers.Add("MusicBox", HandleMusicBox);
 	}
 	
 	// Update is called once per frame
@@ -240,6 +241,16 @@ public class ItemHandler : MonoBehaviour {
 		reseting = true;
 		StartCoroutine(teacup.GetComponent<TeaDrinkAnimation>().TeaCupTilt(PsychicRay.GetPoint(rayLength / 3)));
 		StartCoroutine(ResetGame());
+	}
+
+	void HandleMusicBox(GameObject musicBox) {
+		AudioSource music = musicBox.GetComponent<AudioSource>();
+		if(music.isPlaying) {
+			music.Pause();
+		}
+		else {
+			music.UnPause();
+		}
 	}
 
 	int CreateLayerMask() {
