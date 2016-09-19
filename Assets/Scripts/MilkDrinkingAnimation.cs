@@ -22,7 +22,7 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 		targetScale.y = 0f;
 		Vector3 startingPosition = milkTransform.localPosition;
 		Vector3 endingPosition = milkTransform.localPosition;
-		endingPosition.y -= travelDistance;
+		endingPosition.y = 0;
 		Renderer objectRenderer = milkTransform.gameObject.GetComponent<Renderer>();
 		float lastY = objectRenderer.bounds.extents.y;
 		float t = 0;
@@ -30,6 +30,7 @@ public class MilkDrinkingAnimation : MonoBehaviour {
 		while(t < 1) {
 			
 			milkTransform.localScale = Vector3.Lerp(startingScale, targetScale, t);
+			milkTransform.localPosition = Vector3.Lerp(startingPosition, endingPosition, t);
 			t += Time.deltaTime;
 			yield return null;
 		}
