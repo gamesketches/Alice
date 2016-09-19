@@ -12,6 +12,7 @@ public class CatStomachLining : MonoBehaviour {
 	private int frameCount = 0;
 	private List<Renderer> renderers;
 	AudioSource audio;
+	Texture2D hint;
 	// Use this for initialization
 	void Start () {
 
@@ -23,7 +24,7 @@ public class CatStomachLining : MonoBehaviour {
 		frames = Resources.LoadAll<Texture2D>(DetermineWallAnimation());
 		timer = delay;
 		Invoke("ResetGame", timeToReset);
-
+		Invoke("ChangeToHint", timeToReset - (timeToReset / 4));
 		audio.Play();
 	}
 	
@@ -49,23 +50,25 @@ public class CatStomachLining : MonoBehaviour {
 
 	string DetermineWallAnimation() {
 		string path = "Textures/PoisonEnd";
+		hint = Resources.Load<Texture2D>("Textures/hints/hint1");
 		audio.clip = Resources.Load<AudioClip>("Sounds/Dialogue/teaCup/teaDeath");
 		if(ObjectLogger.eatenByCat) {
 			audio.clip = Resources.Load<AudioClip>("Sounds/Dialogue/catDeath");
 			path = "Textures/BlackAndWhite";
 		}
-		else if(ObjectLogger.drawerOpened){
-			Debug.Log("Should be an image of alice killing herself");
-		}
 		else if(ObjectLogger.bobbyPinObtained) {
-			Debug.Log("Should be an image of opening the drawer");
+			hint = Resources.Load<Texture2D>("Textures/hints/hint3");
 		}
 		else if(ObjectLogger.goodieConsumed) {
-			Debug.Log("Should be an image of the vending machine");
+			hint = Resources.Load<Texture2D>("Textures/hints/hint2");
 		}
-		Debug.LogError("nothing else is implemented yet");
 
 		ObjectLogger.Reset();
 		return path;
+	}
+
+	void ChangeToHint() {
+		frames = new Texture2D[] {hint};
+		frameCount = 0;
 	}
 }
