@@ -245,6 +245,8 @@ public class ItemHandler : MonoBehaviour {
 
 	void HandleMusicBox(GameObject musicBox) {
 		AudioSource music = musicBox.GetComponent<AudioSource>();
+		Animator animation = musicBox.GetComponent<Animator>();
+		animation.SetTrigger("pushButton");
 		if(music.isPlaying) {
 			music.Pause();
 		}
