@@ -11,12 +11,13 @@ public class CatStomachLining : MonoBehaviour {
 	private int timer;
 	private int frameCount = 0;
 	private List<Renderer> renderers;
+	Vector2 textureOffset;
 	AudioSource audio;
 	Texture2D hint;
 	// Use this for initialization
 	void Start () {
 
-		audio = Camera.main.GetComponent<AudioSource>();
+		audio = Camera.main.GetComponents<AudioSource>()[2];
 		renderers = new List<Renderer>();
 		for(int i = 1; i < transform.childCount; i++){
 			renderers.Add(transform.GetChild(i).GetComponent<Renderer>());
@@ -26,6 +27,7 @@ public class CatStomachLining : MonoBehaviour {
 		Invoke("ResetGame", timeToReset);
 		Invoke("ChangeToHint", timeToReset - (timeToReset / 4));
 		audio.Play();
+		textureOffset = new Vector2(0f, 0f);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +37,7 @@ public class CatStomachLining : MonoBehaviour {
 			foreach(Renderer renderer in renderers){
 				renderer.material.mainTexture = frames[frameCount];
 				renderer.material.mainTextureScale = new Vector2(5f, 5f);
+				renderer.material.SetTextureOffset("_MainTex", textureOffset);
 			}
 			frameCount++;
 			if(frameCount == frames.Length){
@@ -69,6 +72,7 @@ public class CatStomachLining : MonoBehaviour {
 
 	void ChangeToHint() {
 		frames = new Texture2D[] {hint};
+		textureOffset = new Vector2(5f, 0f);
 		frameCount = 0;
 	}
 }
