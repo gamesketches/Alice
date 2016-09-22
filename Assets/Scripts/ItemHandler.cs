@@ -117,7 +117,6 @@ public class ItemHandler : MonoBehaviour {
 			StartCoroutine(ScaleThatPokemon());
 		}
 		if(Input.GetKeyDown(KeyCode.R)) {
-			reseting = true;
 			StartCoroutine(ResetGame());
 		}
 
@@ -169,7 +168,12 @@ public class ItemHandler : MonoBehaviour {
 				yield return null;
 			}
 		}
-		SceneManager.LoadScene(1);
+		if(reseting) {
+			SceneManager.LoadScene(1);
+		}
+		else {
+			SceneManager.LoadScene(3);
+		}
 	}
 
 	void HandleCookie(GameObject cookie) {

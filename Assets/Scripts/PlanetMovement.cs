@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlanetMovement : MonoBehaviour {
@@ -25,5 +26,8 @@ public class PlanetMovement : MonoBehaviour {
 		rb.MovePosition(rb.position + Camera.main.transform.TransformDirection(new Vector3(hori, 0, vert).normalized * speed * Time.deltaTime));
 
 		attractor.Attract(transform);
+		if(Input.GetKeyDown(KeyCode.R)){
+			SceneManager.LoadScene(3);
+		}
 	}
 }
