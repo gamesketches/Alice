@@ -1,3 +1,1 @@
-hey I’m noca
-
-hello sam
+Milk and Cookies is a VR experience, loosely based on Alice in Wonderland, that challenges players to solve puzzles and explore space by changing their scale. Spend coins in the vending machine to buy helpful goodies: cookies shrink your size, while milk makes you bigger! With enough money, players navigate a “creepy candy” colored bedroom from varied perspectives in size to attempt to find the house key and escape the room. Watch out for the hungry cat!
